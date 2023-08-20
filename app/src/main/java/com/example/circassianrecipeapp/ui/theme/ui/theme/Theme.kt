@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.view.theme
+package com.example.circassianrecipeapp.ui.theme.ui.theme
 
 import android.app.Activity
 import android.os.Build

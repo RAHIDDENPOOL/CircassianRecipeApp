@@ -13,6 +13,11 @@
         android:theme="@style/Theme.CircassianRecipeApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.theme.MainScreen"
+            android:exported="false"
+            android:label="@string/title_activity_main_screen"
+            android:theme="@style/Theme.CircassianRecipeApp" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
