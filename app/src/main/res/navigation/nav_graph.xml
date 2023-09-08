@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/recipesFragment">
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:label="Recipes" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:label="Favorites" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:label="About" />
+</navigation>
