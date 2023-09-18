@@ -14,53 +14,58 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.circassianrecipeapp.data.models.BottomNavigationItem
+import kotlinx.coroutines.selects.select
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(navController: NavHostController) {
+
     val items = listOf(
         BottomNavigationItem(
+            route = "Recipes",
             title = "Recipes",
             selectedIcon = Icons.Default.List,
             unSelectedIcon = Icons.Default.List
         ),
         BottomNavigationItem(
+            route = "Favorites",
             title = "Favorites",
             selectedIcon = Icons.Default.FavoriteBorder,
             unSelectedIcon = Icons.Default.FavoriteBorder
         ),
         BottomNavigationItem(
-            title = "About",
+            route = "Cooking",
+            title = "Cooking",
             selectedIcon = Icons.Default.Info,
             unSelectedIcon = Icons.Default.Info
         )
     )
 
-    var selectedItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
+    val backStackEntry = navController.currentBackStackEntryAsState()
 
     Scaffold(
         bottomBar = {
             NavigationBar {
                 items.forEachIndexed { index, item ->
                     NavigationBarItem(
-                        selected = selectedItemIndex == index,
-                        onClick = {
-                            selectedItemIndex = index
-                            //navController.navigate(item.title)
-                        },
+                        selected = item.route == backStackEntry.value?.destination?.route,
+                        onClick = { navController.navigate(item.route) }, //route?
                         label = {
                             Text(text = item.title)
                         },
                         alwaysShowLabel = true,
                         icon = {
                             Icon(
-                                imageVector = if (index == selectedItemIndex) {
+                                imageVector = if (item.route == backStackEntry.value?.destination?.route) {
                                     item.selectedIcon
                                 } else item.unSelectedIcon,
                                 contentDescription = item.title
@@ -70,6 +75,16 @@ fun BottomNavigationBar() {
                 }
             }
         },
-        content = { }
+        content = {
+            val currentRoute = backStackEntry.value?.destination?.route
+            when (currentRoute) {
+                "Recipes" -> RecipesScreen()
+                "Favorites" -> FavoritesScreen()
+                "Cooking" -> CookingScreen()
+                else -> {
+                    RecipesScreen() //TODO -> Обработка неизвестного маршрута = экран по дефолту
+                }
+            }
+        }
     )
 }
