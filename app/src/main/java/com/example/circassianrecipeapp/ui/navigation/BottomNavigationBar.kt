@@ -12,20 +12,15 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.circassianrecipeapp.data.models.BottomNavigationItem
-import kotlinx.coroutines.selects.select
+import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
+import com.example.circassianrecipeapp.ui.screens.cooking.CookingScreen
+import com.example.circassianrecipeapp.ui.screens.favorites.FavoritesScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
 
@@ -55,10 +50,10 @@ fun BottomNavigationBar(navController: NavHostController) {
     Scaffold(
         bottomBar = {
             NavigationBar {
-                items.forEachIndexed { index, item ->
+                items.forEachIndexed { _, item ->
                     NavigationBarItem(
                         selected = item.route == backStackEntry.value?.destination?.route,
-                        onClick = { navController.navigate(item.route) }, //route?
+                        onClick = { navController.navigate(item.route) },
                         label = {
                             Text(text = item.title)
                         },
@@ -76,8 +71,7 @@ fun BottomNavigationBar(navController: NavHostController) {
             }
         },
         content = {
-            val currentRoute = backStackEntry.value?.destination?.route
-            when (currentRoute) {
+            when (backStackEntry.value?.destination?.route) {
                 "Recipes" -> RecipesScreen()
                 "Favorites" -> FavoritesScreen()
                 "Cooking" -> CookingScreen()
