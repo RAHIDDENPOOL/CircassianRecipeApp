@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -25,11 +26,11 @@ import androidx.navigation.NavController
 import com.example.circassianrecipeapp.view.theme.MainContentColorMaterialTheme
 
 @Composable
-fun RecipesList(
+fun MainScreen(
     imageId: Array<Int>,
     names: Array<String>,
     ingredients: Array<String>,
-    navController: NavController,
+    listNavController: NavController,
     modifier: Modifier = Modifier
 ) {
 
@@ -43,7 +44,7 @@ fun RecipesList(
                 title = names,
                 ingredients = ingredients,
                 itemIndex = it,
-                navController = navController
+                listNavController = listNavController
             )
         }
     }
@@ -57,7 +58,7 @@ fun ColumnItem(
     title: Array<String>,
     ingredients: Array<String>,
     itemIndex: Int,
-    navController: NavController
+    listNavController: NavController
 ) {
 
 
@@ -66,7 +67,7 @@ fun ColumnItem(
             .padding(10.dp)
             .wrapContentSize()
             .clickable {
-                navController.navigate(route = "DetailScreen/$itemIndex")
+                listNavController.navigate(route = "DetailScreen/$itemIndex")
             },
         colors = CardDefaults.cardColors(
             containerColor = MainContentColorMaterialTheme
