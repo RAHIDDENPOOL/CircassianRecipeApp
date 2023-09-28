@@ -24,20 +24,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.ui.navigation.TopAppBar
-import com.example.circassianrecipeapp.ui.screens.recipes.components.RecipesList
+import com.example.circassianrecipeapp.ui.screens.recipes.components.Main
 
 @Preview
 @Composable
 fun RecipesScreen() {
-    /*TopAppBar()
+    TopAppBar()
      Column(
          Modifier
              .fillMaxWidth()
-             .padding(top = 100.dp)
+             .padding(top = 55.dp)
      ) {
          NumberList()
-     } */
-    RecipesList()
+         Main()
+     }
 }
 
 

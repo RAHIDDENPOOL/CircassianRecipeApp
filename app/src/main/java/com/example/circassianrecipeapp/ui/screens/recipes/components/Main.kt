@@ -5,29 +5,29 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.circassianrecipeapp.R
-import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
 
+@Preview
 @Composable
-fun Show() {
-
+fun Main() {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         val imageId = arrayOf(
             R.drawable.carousel_first_item,
-             //R.drawable.p2,
-             //R.drawable.p3,
-             //R.drawable.p4,
-             //R.drawable.p5,
-             //R.drawable.p6
-        )
+            R.drawable.carousel_second_item,
+            R.drawable.carousel_first_item,
+            R.drawable.carousel_second_item,
+            R.drawable.carousel_first_item,
+            R.drawable.carousel_second_item
+            )
 
         val names = arrayOf(
             "Peperoni",
@@ -47,10 +47,10 @@ fun Show() {
             "Tomato sos, cheese, oregano, corn, jalapeno, chicken",
         )
 
-        val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "RecipesScreen") {
-            composable(route = "RecipesScreen") {
-                RecipesScreen(imageId, names, ingredients, navController)
+        val listNavController = rememberNavController()
+        NavHost(navController = listNavController, startDestination = "MainScreen") {
+            composable(route = "MainScreen") {
+                MainScreen(imageId, names, ingredients, listNavController)
             }
             composable(route = "DetailScreen/{index}",
                 arguments = listOf(
@@ -67,6 +67,5 @@ fun Show() {
                 )
             }
         }
-
     }
 }
