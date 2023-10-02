@@ -24,23 +24,22 @@ fun DetailScreen(
     photos: Array<Int>,
     names: Array<String>,
     ingredients: Array<String>,
-    itemIndex: Int?
+    itemIndex: Int?,
 ) {
     Column(
         modifier
             .fillMaxSize()
             .padding(25.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-
         Box(
             modifier.fillMaxWidth(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Image(
                 painter = painterResource(id = photos[itemIndex!!]),
                 contentDescription = names[itemIndex],
-                modifier.clip(RoundedCornerShape(16.dp))
+                modifier.clip(RoundedCornerShape(16.dp)),
             )
         }
         Text(text = names[itemIndex!!], fontSize = 30.sp, fontWeight = FontWeight.Bold)

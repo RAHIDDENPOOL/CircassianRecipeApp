@@ -15,10 +15,10 @@ import com.example.circassianrecipeapp.R
 
 @Preview
 @Composable
-fun Main() {
+fun RecipeNavigation() {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.background,
     ) {
         val imageId = arrayOf(
             R.drawable.carousel_first_item,
@@ -26,8 +26,8 @@ fun Main() {
             R.drawable.carousel_first_item,
             R.drawable.carousel_second_item,
             R.drawable.carousel_first_item,
-            R.drawable.carousel_second_item
-            )
+            R.drawable.carousel_second_item,
+        )
 
         val names = arrayOf(
             "Peperoni",
@@ -35,7 +35,7 @@ fun Main() {
             "FourCheese",
             "Margaritta",
             "American",
-            "Mexican"
+            "Mexican",
         )
 
         val ingredients = arrayOf(
@@ -50,20 +50,21 @@ fun Main() {
         val listNavController = rememberNavController()
         NavHost(navController = listNavController, startDestination = "MainScreen") {
             composable(route = "MainScreen") {
-                MainScreen(imageId, names, ingredients, listNavController)
+                RecipeCardsColumn(imageId, names, ingredients, listNavController)
             }
-            composable(route = "DetailScreen/{index}",
+            composable(
+                "DetailScreen/{index}",
                 arguments = listOf(
                     navArgument(name = "index") {
                         type = NavType.IntType
-                    }
-                )
+                    },
+                ),
             ) { index ->
                 DetailScreen(
                     photos = imageId,
                     names = names,
                     ingredients = ingredients,
-                    itemIndex = index.arguments?.getInt("index")
+                    itemIndex = index.arguments?.getInt("index"),
                 )
             }
         }

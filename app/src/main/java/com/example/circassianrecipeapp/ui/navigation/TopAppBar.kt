@@ -1,7 +1,6 @@
 package com.example.circassianrecipeapp.ui.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -14,7 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +21,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.circassianrecipeapp.R
-import com.example.circassianrecipeapp.view.theme.MainContentColorMaterialTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +38,7 @@ fun TopAppBar() {
                         fontSize = 22.sp,
                         lineHeight = 28.sp,
                         fontWeight = FontWeight(400),
-                        fontFamily = FontFamily.Serif // Roboto
+                        fontFamily = FontFamily.Serif, // Roboto
                     )
                 },
                 navigationIcon = {
@@ -49,7 +46,7 @@ fun TopAppBar() {
                         Icon(
                             modifier = Modifier.size(24.dp),
                             imageVector = Icons.Filled.Search,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 },
@@ -58,12 +55,12 @@ fun TopAppBar() {
                         Icon(
                             modifier = Modifier.size(24.dp),
                             imageVector = Icons.Filled.Settings,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
-                }
+                },
             )
         },
-        content = {}
+        content = {},
     )
 }

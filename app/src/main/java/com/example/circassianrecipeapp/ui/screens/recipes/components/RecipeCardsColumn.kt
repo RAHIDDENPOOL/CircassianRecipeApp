@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,14 +25,13 @@ import androidx.navigation.NavController
 import com.example.circassianrecipeapp.view.theme.MainContentColorMaterialTheme
 
 @Composable
-fun MainScreen(
+fun RecipeCardsColumn(
     imageId: Array<Int>,
     names: Array<String>,
     ingredients: Array<String>,
     listNavController: NavController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         val itemCount = imageId.size
 
@@ -44,11 +42,10 @@ fun MainScreen(
                 title = names,
                 ingredients = ingredients,
                 itemIndex = it,
-                listNavController = listNavController
+                listNavController = listNavController,
             )
         }
     }
-
 }
 
 @Composable
@@ -58,36 +55,31 @@ fun ColumnItem(
     title: Array<String>,
     ingredients: Array<String>,
     itemIndex: Int,
-    listNavController: NavController
+    listNavController: NavController,
 ) {
-
-
     Card(
         modifier
             .padding(10.dp)
             .wrapContentSize()
-            .clickable {
-                listNavController.navigate(route = "DetailScreen/$itemIndex")
-            },
+            .clickable { listNavController.navigate("DetailScreen/$itemIndex") },
         colors = CardDefaults.cardColors(
-            containerColor = MainContentColorMaterialTheme
+            containerColor = MainContentColorMaterialTheme,
         ),
-        elevation = CardDefaults.cardElevation(10.dp)
+        elevation = CardDefaults.cardElevation(10.dp),
     ) {
         Row(
             modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.spacedBy(15.dp)
+            horizontalArrangement = Arrangement.spacedBy(15.dp),
         ) {
             Image(
                 painter = painterResource(id = painter[itemIndex]),
                 contentDescription = title[itemIndex],
-                modifier.size(140.dp)
+                modifier.size(140.dp),
             )
             Column(modifier.padding(12.dp)) {
                 Text(text = title[itemIndex], fontSize = 24.sp, fontWeight = FontWeight.Bold)
                 Text(text = ingredients[itemIndex], fontSize = 18.sp)
-
             }
         }
     }

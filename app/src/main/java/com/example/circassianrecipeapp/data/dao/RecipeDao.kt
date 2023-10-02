@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.data.database
+package com.example.circassianrecipeapp.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
@@ -19,5 +19,4 @@ interface RecipeDao {
     suspend fun upsertRecipe(recipe: Recipe)
 
     // TODO getRecipesByCategory(category: String): Flow<List<Recipe>>
-
 }

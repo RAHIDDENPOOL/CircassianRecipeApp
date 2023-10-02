@@ -12,6 +12,6 @@ fun CookingScreen() {
     TopAppBar()
     Text(
         modifier = Modifier.padding(top = 100.dp),
-        text = "what was a cooking screen"
+        text = "what was a cooking screen",
     )
 }

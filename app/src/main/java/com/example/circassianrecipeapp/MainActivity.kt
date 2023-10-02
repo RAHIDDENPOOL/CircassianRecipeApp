@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = "Recipes"
+                    startDestination = "Recipes",
                 ) {
                     composable("Recipes") {
                         BottomNavigationBar(navController)
