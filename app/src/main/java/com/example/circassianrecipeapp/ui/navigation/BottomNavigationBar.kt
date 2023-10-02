@@ -15,34 +15,33 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.circassianrecipeapp.data.models.BottomNavigationItem
-import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
 import com.example.circassianrecipeapp.ui.screens.cooking.CookingScreen
 import com.example.circassianrecipeapp.ui.screens.favorites.FavoritesScreen
+import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-
     val items = listOf(
         BottomNavigationItem(
             route = "Recipes",
             title = "Recipes",
             selectedIcon = Icons.Default.List,
-            unSelectedIcon = Icons.Default.List
+            unSelectedIcon = Icons.Default.List,
         ),
         BottomNavigationItem(
             route = "Favorites",
             title = "Favorites",
             selectedIcon = Icons.Default.FavoriteBorder,
-            unSelectedIcon = Icons.Default.FavoriteBorder
+            unSelectedIcon = Icons.Default.FavoriteBorder,
         ),
         BottomNavigationItem(
             route = "Cooking",
             title = "Cooking",
             selectedIcon = Icons.Default.Info,
-            unSelectedIcon = Icons.Default.Info
-        )
+            unSelectedIcon = Icons.Default.Info,
+        ),
     )
 
     val backStackEntry = navController.currentBackStackEntryAsState()
@@ -62,23 +61,34 @@ fun BottomNavigationBar(navController: NavHostController) {
                             Icon(
                                 imageVector = if (item.route == backStackEntry.value?.destination?.route) {
                                     item.selectedIcon
-                                } else item.unSelectedIcon,
-                                contentDescription = item.title
+                                } else {
+                                    item.unSelectedIcon
+                                },
+                                contentDescription = item.title,
                             )
-                        }
+                        },
                     )
                 }
             }
         },
         content = {
             when (backStackEntry.value?.destination?.route) {
-                "Recipes" -> RecipesScreen()
-                "Favorites" -> FavoritesScreen()
-                "Cooking" -> CookingScreen()
+                "Recipes" -> {
+                    RecipesScreen()
+                }
+
+                "Favorites" -> {
+                    FavoritesScreen()
+                }
+
+                "Cooking" -> {
+                    CookingScreen()
+                }
+
                 else -> {
-                    RecipesScreen() //TODO -> Обработка неизвестного маршрута = экран по дефолту
+                    RecipesScreen() // TODO -> Обработка неизвестного маршрута = экран по дефолту
                 }
             }
-        }
+        },
     )
 }

@@ -6,5 +6,5 @@ data class BottomNavigationItem(
     val title: String,
     val route: String,
     val selectedIcon: ImageVector,
-    val unSelectedIcon: ImageVector
+    val unSelectedIcon: ImageVector,
 )
