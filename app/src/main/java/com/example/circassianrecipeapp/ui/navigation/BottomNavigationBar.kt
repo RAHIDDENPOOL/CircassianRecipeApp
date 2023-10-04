@@ -25,7 +25,7 @@ import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
         BottomNavigationItem(
-            route = "Recipes",
+            route = "RecipesScreen",
             title = "Recipes",
             selectedIcon = Icons.Default.List,
             unSelectedIcon = Icons.Default.List,
@@ -73,8 +73,8 @@ fun BottomNavigationBar(navController: NavHostController) {
         },
         content = {
             when (backStackEntry.value?.destination?.route) {
-                "Recipes" -> {
-                    RecipesScreen()
+                "RecipesScreen" -> {
+                    RecipesScreen(navController = navController)
                 }
 
                 "Favorites" -> {
@@ -86,7 +86,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                 }
 
                 else -> {
-                    RecipesScreen() // TODO -> Обработка неизвестного маршрута = экран по дефолту
+                    RecipesScreen(navController = navController) // TODO -> Обработка неизвестного маршрута = экран по дефолту
                 }
             }
         },
