@@ -29,8 +29,8 @@ fun RecipeCardsColumn(
     imageId: Array<Int>,
     names: Array<String>,
     ingredients: Array<String>,
-    listNavController: NavController,
     modifier: Modifier = Modifier,
+    navController: NavController,
 ) {
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         val itemCount = imageId.size
@@ -42,7 +42,7 @@ fun RecipeCardsColumn(
                 title = names,
                 ingredients = ingredients,
                 itemIndex = it,
-                listNavController = listNavController,
+                navController = navController,
             )
         }
     }
@@ -55,13 +55,15 @@ fun ColumnItem(
     title: Array<String>,
     ingredients: Array<String>,
     itemIndex: Int,
-    listNavController: NavController,
+    navController: NavController,
 ) {
     Card(
         modifier
             .padding(10.dp)
             .wrapContentSize()
-            .clickable { listNavController.navigate("DetailScreen/$itemIndex") },
+            .clickable {
+                navController.navigate("DetailScreen/$itemIndex")
+            },
         colors = CardDefaults.cardColors(
             containerColor = MainContentColorMaterialTheme,
         ),
