@@ -3,6 +3,7 @@ package com.example.circassianrecipeapp.ui.screens.recipes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,6 +17,7 @@ import com.example.circassianrecipeapp.ui.screens.recipes.components.RecipeCards
 @Composable
 fun RecipesScreen(navController: NavController) {
     MaterialTheme {
+        val lazyListState = rememberLazyListState()
         TopAppBar()
         Column(
             Modifier
@@ -23,7 +25,7 @@ fun RecipesScreen(navController: NavController) {
                 .padding(top = 55.dp),
 
         ) {
-            Carousel()
+            Carousel(lazyListState = lazyListState)
 
             val imageId = arrayOf(
                 R.drawable.dish_one,

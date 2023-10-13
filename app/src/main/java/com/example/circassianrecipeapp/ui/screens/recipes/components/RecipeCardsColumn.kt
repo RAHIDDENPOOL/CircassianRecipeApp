@@ -166,26 +166,3 @@ fun ColumnItem(
         }
     }
 }
-/*
-@Preview
-@Composable
-fun PreviewColumnItem() {
-    val modifier = Modifier
-    val painter = arrayOf(R.drawable.dish_two)
-    val title = arrayOf("Черкесские медовые шарики")
-    val ingredients = arrayOf("Сладости")
-    val itemIndex = 0
-    val description =
-        arrayOf("Медовые шарики - блюдо черкесской кухни, которое умеет готовить каждая черкесская хозяйка")
-    val navController: NavController = rememberNavController()
-
-    ColumnItem(
-        modifier = modifier,
-        painter = painter,
-        title = title,
-        subhead = ingredients,
-        description = description,
-        itemIndex = itemIndex,
-        navController = navController,
-    )
-}*/

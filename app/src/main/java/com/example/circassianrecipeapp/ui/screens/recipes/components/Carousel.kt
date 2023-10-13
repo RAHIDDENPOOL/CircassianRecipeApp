@@ -1,5 +1,7 @@
 package com.example.circassianrecipeapp.ui.screens.recipes.components
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,9 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,12 +25,13 @@ import androidx.compose.ui.unit.dp
 import com.example.circassianrecipeapp.R
 
 @Composable
-fun Carousel() {
-    val lazyListState = rememberLazyListState()
+fun Carousel(lazyListState: LazyListState) {
     LazyRow(state = lazyListState) {
         items(items.take(3)) {
             ItemView(
                 modifier = Modifier
+                    .animateContentSize(animationSpec = tween(durationMillis = 200))
+                    .height(height = if (lazyListState.isScrolled) 0.dp else TOP_BAR_HEIGHT)
                     .padding(start = 16.dp, end = 8.dp, bottom = 16.dp, top = 8.dp)
                     .fillMaxWidth(),
             )
@@ -73,3 +76,7 @@ val items = listOf(
     Items(num = 2),
     Items(num = 3),
 )
+
+val TOP_BAR_HEIGHT = 205.dp
+val LazyListState.isScrolled: Boolean
+    get() = firstVisibleItemIndex > 0 || firstVisibleItemScrollOffset > 0
