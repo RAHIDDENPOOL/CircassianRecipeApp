@@ -45,28 +45,28 @@ fun RecipesScreen(navController: NavController) {
                         R.drawable.dish_two,
                     )
                     val names = arrayOf(
-                        "Peperoni",
-                        "Vegan",
-                        "FourCheese",
-                        "Margaritta",
-                        "American",
-                        "Mexican",
+                        "Черкесский гуляш (Либжэ)",
+                        "Лягур с пастой",
+                        "Гедлибже из курицы",
+                        "Лакум",
+                        "Ритуальный суп из вяленого мяса (Ашрык)",
+                        "Черкесский омлет",
                     )
                     val ingredients = arrayOf(
-                        "Tomato sos, cheese, oregano, peperoni",
-                        "Tomato sos, cheese, oregano, spinach, green paprika, rukola",
-                        "Tomato sos, oregano, mozzarella, goda, parmesan, cheddar",
-                        "Tomato sos, cheese, oregano, bazillion",
-                        "Tomato sos, cheese, oregano, green paprika, red beans",
-                        "Tomato sos, cheese, oregano, corn, jalapeno, chicken",
+                        "Говядина, вырезка 700 г",
+                        "Лук репчатый 350.г",
+                        "Чеснок, сырой 15.г",
+                        "Вода 1л",
+                        "Соль поваренная пищевая 10.г",
+                        "Сметана 15,0% жирности 300.г",
                     )
                     val description = arrayOf(
-                        "Circassian sos, cheese, oregano, peperoni",
-                        "Circassian sos, cheese, oregano, spinach, green paprika, rukola",
-                        "Circassian sos, oregano, mozzarella, goda, parmesan, cheddar",
-                        "Circassian sos, cheese, oregano, bazillion",
-                        "Circassian sos, cheese, oregano, green paprika, red beans",
-                        "Circassian sos, cheese, oregano, corn, jalapeno, chicken",
+                        "Это оригинальное блюдо Черкесской кухни готовится из говядины",
+                        "Мясо промываем в холодной воде. Мясо зачищаем от мелких костей, пленки и сухожилий и еще раз промываем в холодной проточной воде",
+                        "Ставим на большой огонь и быстро доведем до кипения, затем уменьшим нагрев и начнем варить",
+                        "Пока варится мясо, на верху кастрюли будет собираться жир и пена, ее обязательно нужно снимать (пена может придать горечь и неприятный запах нашему мясу и бульону)",
+                        "Варка считается законченной, если волокна мяса можно отрывать друг от друга руками",
+                        "Как только мясо готово, мы расщепим мясо мелкими кусками и переложим в тарелку",
                     )
 
                     HorizontalPager(

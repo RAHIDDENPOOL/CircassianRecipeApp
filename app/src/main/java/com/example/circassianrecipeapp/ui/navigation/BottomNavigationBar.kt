@@ -26,19 +26,19 @@ fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
         BottomNavigationItem(
             route = "RecipesScreen",
-            title = "Recipes",
+            title = "Рецепты",
             selectedIcon = Icons.Default.List,
             unSelectedIcon = Icons.Default.List,
         ),
         BottomNavigationItem(
             route = "Favorites",
-            title = "Favorites",
+            title = "Избранные",
             selectedIcon = Icons.Default.FavoriteBorder,
             unSelectedIcon = Icons.Default.FavoriteBorder,
         ),
         BottomNavigationItem(
             route = "Cooking",
-            title = "Cooking",
+            title = "Готовка",
             selectedIcon = Icons.Default.Info,
             unSelectedIcon = Icons.Default.Info,
         ),
