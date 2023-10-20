@@ -28,7 +28,7 @@ import com.example.circassianrecipeapp.view.theme.roboto
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBar() {
+fun TopNavigationBar() {
     MaterialTheme {
         Scaffold(
             topBar = {
