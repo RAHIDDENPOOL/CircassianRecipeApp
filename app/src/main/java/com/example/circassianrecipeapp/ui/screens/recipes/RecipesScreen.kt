@@ -52,13 +52,13 @@ fun RecipesScreen(navController: NavController) {
                         "Ритуальный суп из вяленого мяса (Ашрык)",
                         "Черкесский омлет",
                     )
-                    val ingredients = arrayOf(
-                        "Говядина, вырезка 700 г",
-                        "Лук репчатый 350.г",
-                        "Чеснок, сырой 15.г",
-                        "Вода 1л",
-                        "Соль поваренная пищевая 10.г",
-                        "Сметана 15,0% жирности 300.г",
+                    val tag = arrayOf(
+                        "Сладости",
+                        "Мясное блюдо",
+                        "Суп",
+                        "Мучные изделия",
+                        "Салат",
+                        "Напитки",
                     )
                     val description = arrayOf(
                         "Это оригинальное блюдо Черкесской кухни готовится из говядины",
@@ -76,7 +76,7 @@ fun RecipesScreen(navController: NavController) {
                         RecipeCardsColumn(
                             imageId = imageId,
                             names = names,
-                            subhead = ingredients,
+                            subhead = tag,
                             description = description,
                             navController = navController,
                         )
