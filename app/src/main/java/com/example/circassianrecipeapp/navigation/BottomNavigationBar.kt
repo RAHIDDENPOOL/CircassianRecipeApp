@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.navigation
+package com.example.circassianrecipeapp.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.circassianrecipeapp.data.models.BottomNavigationItem
 import com.example.circassianrecipeapp.ui.screens.cooking.CookingScreen
 import com.example.circassianrecipeapp.ui.screens.favorites.FavoritesScreen
 import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
@@ -25,19 +24,19 @@ import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
 fun BottomNavigationBar(navController: NavHostController) {
     val items = listOf(
         BottomNavigationItem(
-            route = "RecipesScreen",
+            route = Route.RecipesScreen,
             title = "Рецепты",
             selectedIcon = Icons.Default.List,
             unSelectedIcon = Icons.Default.List,
         ),
         BottomNavigationItem(
-            route = "Favorites",
+            route = Route.Favorites,
             title = "Избранные",
             selectedIcon = Icons.Default.FavoriteBorder,
             unSelectedIcon = Icons.Default.FavoriteBorder,
         ),
         BottomNavigationItem(
-            route = "Cooking",
+            route = Route.Cooking,
             title = "Готовка",
             selectedIcon = Icons.Default.Info,
             unSelectedIcon = Icons.Default.Info,
@@ -59,11 +58,8 @@ fun BottomNavigationBar(navController: NavHostController) {
                         alwaysShowLabel = true,
                         icon = {
                             Icon(
-                                imageVector = if (item.route == backStackEntry.value?.destination?.route) {
-                                    item.selectedIcon
-                                } else {
-                                    item.unSelectedIcon
-                                },
+                                imageVector = item.selectedIcon.takeIf { item.route == backStackEntry.value?.destination?.route }
+                                    ?: item.unSelectedIcon,
                                 contentDescription = item.title,
                             )
                         },
@@ -73,15 +69,15 @@ fun BottomNavigationBar(navController: NavHostController) {
         },
         content = {
             when (backStackEntry.value?.destination?.route) {
-                "RecipesScreen" -> {
+                Route.RecipesScreen -> {
                     RecipesScreen(navController = navController)
                 }
 
-                "Favorites" -> {
+                Route.Favorites -> {
                     FavoritesScreen()
                 }
 
-                "Cooking" -> {
+                Route.Cooking -> {
                     CookingScreen()
                 }
 

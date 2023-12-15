@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.circassianrecipeapp.ui.navigation.TopNavigationBar
+import com.example.circassianrecipeapp.navigation.TopNavigationBar
 
 @Composable
 fun CookingScreen() {

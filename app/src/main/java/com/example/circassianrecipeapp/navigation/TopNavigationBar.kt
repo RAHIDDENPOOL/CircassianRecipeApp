@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.navigation
+package com.example.circassianrecipeapp.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.size

@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.utils
+package com.example.circassianrecipeapp.ui.screens.recipes.utils
 
 import android.annotation.SuppressLint
 import androidx.annotation.FloatRange

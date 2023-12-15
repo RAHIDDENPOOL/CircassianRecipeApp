@@ -8,11 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.circassianrecipeapp.R
-import com.example.circassianrecipeapp.ui.navigation.TopNavigationBar
+import com.example.circassianrecipeapp.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.ui.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.ui.screens.recipes.components.RecipeCardsColumn
-import com.example.circassianrecipeapp.ui.utils.VerticalNestedScrollView
-import com.example.circassianrecipeapp.ui.utils.rememberNestedScrollViewState
+import com.example.circassianrecipeapp.ui.screens.recipes.utils.VerticalNestedScrollView
+import com.example.circassianrecipeapp.ui.screens.recipes.utils.rememberNestedScrollViewState
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -36,6 +36,7 @@ fun RecipesScreen(navController: NavController) {
             content = {
                 val pagerState = rememberPagerState(pageCount = 10)
                 Column {
+                    // здесь должен быть Recipes который передает список всех рецептов
                     val imageId = arrayOf(
                         R.drawable.dish_one,
                         R.drawable.dish_two,
