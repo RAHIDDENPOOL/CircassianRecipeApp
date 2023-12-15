@@ -1,18 +1,16 @@
 package com.example.circassianrecipeapp
 
-import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.circassianrecipeapp.ui.navigation.BottomNavigationBar
-import com.example.circassianrecipeapp.view.theme.CircassianRecipeAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onResume() {
+        super.onResume()
         setContent {
-            CircassianRecipeAppTheme {
-                BottomNavigationBar()
-            }
+            MviApp()
         }
     }
 }
