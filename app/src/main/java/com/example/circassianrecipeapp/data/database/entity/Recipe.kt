@@ -8,12 +8,13 @@ import androidx.room.PrimaryKey
 data class Recipe(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val recipeId: Int,
+    val recipeId: Int = 0,
     val imageId: Int,
     val name: String,
     val category: String,
     val ingredients: String,
     val instructions: String,
+    val isFavorite: Boolean
 ) {
     override fun toString() = name
 }

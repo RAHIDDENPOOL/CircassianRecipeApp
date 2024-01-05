@@ -20,28 +20,4 @@ class CircassianApp : Application() {
             database.recipeDao()
         }
     }
-
-    private suspend fun initWithPreconditionData() {
-        val recipes = listOf(
-            Recipe(
-                1,
-                R.drawable.dish_one,
-                "Recipe 1",
-                "Category 1",
-                "Ingredients 1",
-                "Instructions 1",
-            ),
-            Recipe(
-                2,
-                R.drawable.dish_two,
-                "Recipe 2",
-                "Category 2",
-                "Ingredients 2",
-                "Instructions 2",
-            ),
-        )
-        recipes.forEach { recipe ->
-            database.recipeDao().upsertRecipe(recipe)
-        }
-    }
 }
