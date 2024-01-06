@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDao {
 
     @Query("SELECT * FROM recipes")
-    fun getRecipes(): Flow<List<Recipe>>
+    fun getRecipes(name: Recipe, category: Recipe): Flow<List<Recipe>>
 
     @Query("SELECT * FROM recipes WHERE id = :recipeId")
-    fun getRecipeById(recipeId: Long): Flow<Recipe?>
+    fun getRecipeById(recipeId: Recipe): Flow<Recipe?>
 
     @Query("SELECT * FROM recipes ORDER BY :category")
     fun getRecipesByCategory(category: String): Flow<List<Recipe>>
