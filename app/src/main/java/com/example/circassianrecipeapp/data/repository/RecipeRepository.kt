@@ -54,11 +54,11 @@ class RecipeRepository @Inject constructor(
         }
     }
 
-    suspend fun getAllRecipes(): Flow<List<Recipe>> {
-        return recipeDao.getRecipes()
+    suspend fun getRecipes(name: String, category: String): Flow<List<Recipe>> {
+        return recipeDao.getRecipes(name, category)
     }
 
-    suspend fun getRecipeById(recipeId: Long): Flow<Recipe?> {
+    suspend fun getRecipeById(recipeId: Int): Flow<Recipe?> {
         return recipeDao.getRecipeById(recipeId)
     }
 
