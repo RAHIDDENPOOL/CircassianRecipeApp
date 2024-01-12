@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 data class State(
+    val selectedRecipe: Flow<Recipe?>? = null,
     val recipes: Flow<List<Recipe>> = flowOf(emptyList()),
     val favoriteRecipes: Flow<List<Recipe>> = flowOf(emptyList())
 )

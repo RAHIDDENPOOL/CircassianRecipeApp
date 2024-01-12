@@ -1,31 +1,20 @@
 package com.example.circassianrecipeapp.data.repository
 
-import android.app.Application
-import androidx.room.Room
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.data.dao.RecipeDao
 import com.example.circassianrecipeapp.data.database.entity.Recipe
-import com.example.circassianrecipeapp.di.DatabaseModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RecipeRepository @Inject constructor(
-    application: Application,
     private val recipeDao: RecipeDao
 ) {
-    private val database = Room.databaseBuilder(
-        application,
-        DatabaseModule::class.java,
-        "circassian_recipe_database"
-    ).fallbackToDestructiveMigration().build()
-
-    init {
-        insertInitialRecipes()
-    }
-
     private fun insertInitialRecipes() {
         CoroutineScope(Dispatchers.Default).launch {
             val recipes = listOf(
@@ -47,26 +36,33 @@ class RecipeRepository @Inject constructor(
                 ),
                 // Добавляем сюда все рецепты
             )
-
             for (recipe in recipes) {
                 recipeDao.insert(recipe)
             }
         }
     }
 
-    suspend fun getAllRecipes(): Flow<List<Recipe>> {
-        return recipeDao.getRecipes()
+    fun getRecipes(name: String, category: String): Flow<List<Recipe>> {
+        return recipeDao.getRecipes(name, category)
     }
 
-    suspend fun getRecipeById(recipeId: Long): Flow<Recipe?> {
+    fun getRecipeById(recipeId: Int): Flow<Recipe?> {
         return recipeDao.getRecipeById(recipeId)
     }
 
-    suspend fun getRecipesByCategory(category: String): Flow<List<Recipe>> {
+    suspend fun addToFavorite(recipeId: Int) {
+        val recipe = recipeDao.getRecipeById(recipeId).firstOrNull()
+        recipe?.let {
+            it.isFavorite = true
+            recipeDao.insert(it)
+        }
+    }
+
+    fun getRecipesByCategory(category: String): Flow<List<Recipe>> {
         return recipeDao.getRecipesByCategory(category)
     }
 
-    suspend fun getFavoriteRecipes(): Flow<List<Recipe>> {
+    fun getFavoriteRecipes(): Flow<List<Recipe>> {
         return recipeDao.getFavoriteRecipes(true)
     }
 
