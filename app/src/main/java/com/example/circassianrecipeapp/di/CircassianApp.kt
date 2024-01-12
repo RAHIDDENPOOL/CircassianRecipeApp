@@ -1,12 +1,8 @@
 package com.example.circassianrecipeapp.di
 
 import android.app.Application
-import com.example.circassianrecipeapp.R
-import com.example.circassianrecipeapp.data.database.entity.Recipe
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -16,7 +12,8 @@ class CircassianApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CoroutineScope(Dispatchers.Default).launch {
+        //TODO здесь опционально можно запустить viewModelScope.launch{}
+        runBlocking {
             database.recipeDao()
         }
     }
