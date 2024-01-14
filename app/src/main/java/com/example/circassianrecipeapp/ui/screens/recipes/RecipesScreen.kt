@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -20,7 +22,7 @@ import com.google.accompanist.pager.rememberPagerState
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun RecipesScreen(navController: NavController) {
+fun RecipesScreen(navController: NavController, viewModel: RecipesViewModel) {
     TopNavigationBar()
     Scaffold(
         Modifier
@@ -34,9 +36,10 @@ fun RecipesScreen(navController: NavController) {
                 Carousel()
             },
             content = {
-                val pagerState = rememberPagerState(pageCount = 10)
                 Column {
+                    val recipesState by viewModel.state.collectAsState()
                     // здесь должен быть Recipes который передает список всех рецептов
+
                     val imageId = arrayOf(
                         R.drawable.dish_one,
                         R.drawable.dish_two,
@@ -69,10 +72,11 @@ fun RecipesScreen(navController: NavController) {
                         "Варка считается законченной, если волокна мяса можно отрывать друг от друга руками",
                         "Как только мясо готово, мы расщепим мясо мелкими кусками и переложим в тарелку",
                     )
-
+                    val pagerState = rememberPagerState(initialPage = 10)
                     HorizontalPager(
                         modifier = Modifier.weight(1f),
                         state = pagerState,
+                        count = 10
                     ) {
                         RecipeCardsColumn(
                             imageId = imageId,

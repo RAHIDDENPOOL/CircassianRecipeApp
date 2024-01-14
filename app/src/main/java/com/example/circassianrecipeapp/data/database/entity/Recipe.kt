@@ -9,12 +9,13 @@ data class Recipe(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val recipeId: Int = 0,
-    val imageId: Int,
-    val name: String,
+    @ColumnInfo(name = "imageId")
+    val imageId: Int = 0,
+    val tittle: String,
     val category: String,
+    val label: String,
+    val description: String,
     val ingredients: String,
     val instructions: String,
     var isFavorite: Boolean
-) {
-    override fun toString() = name
-}
+)
