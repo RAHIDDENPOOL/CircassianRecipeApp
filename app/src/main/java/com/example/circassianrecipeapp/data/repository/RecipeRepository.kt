@@ -9,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -60,12 +59,12 @@ class RecipeRepository @Inject constructor(
     }
 
     fun getRecipeById(
-        recipeId: Int, imageId: Int, tittle: String, label: String,
-        description: String, ingredients: String, instructions: String
+        recipeId: Int, imageId: Int, tittle: String, label: String, description:
+        String, ingredients: String, instructions: String
     ): Flow<Recipe?> {
         return recipeDao.getRecipeById(
-            recipeId, imageId, tittle, label, description,
-            ingredients, instructions
+            recipeId, imageId, tittle, label,
+            description, ingredients, instructions
         )
     }
 

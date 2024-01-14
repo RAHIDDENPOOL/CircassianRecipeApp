@@ -9,7 +9,8 @@ data class Recipe(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val recipeId: Int = 0,
-    val imageId: Int,
+    @ColumnInfo(name = "imageId")
+    val imageId: Int = 0,
     val tittle: String,
     val category: String,
     val label: String,

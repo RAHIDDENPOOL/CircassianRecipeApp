@@ -1,13 +1,10 @@
 package com.example.circassianrecipeapp.ui.screens.recipes
 
 import androidx.lifecycle.viewModelScope
-import com.example.circassianrecipeapp.data.dao.RecipeDao
-import com.example.circassianrecipeapp.data.database.entity.Recipe
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.domain.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,23 +15,28 @@ class RecipesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            recipeRepository.state.collect {
-                state.emit(it)
-            }
+            recipeRepository.insertInitialRecipes()
         }
     }
 
-    val recipes: Flow<List<Recipe>> = recipeRepository.getRecipes("", "")
-
-    fun addToFavorite(recipeId: Int) {
-        handleEvent(Event.AddToFavorite(recipeId))
+    fun addToFavorite(recipeId: Int, isFavorite: Boolean) {
+        handleEvent(Event.AddToFavorite(recipeId, isFavorite))
     }
 
-    fun openRecipe(recipeId: Int) {
-        handleEvent(Event.OpenRecipe(recipeId))
+    fun openRecipe(
+        recipeId: Int,
+        imageId: Int,
+        title: String,
+        label: String,
+        description: String,
+        ingredients: String,
+        instructions: String
+    ) {
+        handleEvent(
+            Event.OpenRecipe(
+                recipeId, imageId, title, label, description, ingredients, instructions
+            )
+        )
     }
 
-    fun searchRecipe(name: String, category: String) {
-        handleEvent(Event.SearchRecipe(name, category))
-    }
 }

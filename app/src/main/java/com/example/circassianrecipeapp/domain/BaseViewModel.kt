@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-    val state: MutableStateFlow<State> = recipeRepository.state as MutableStateFlow<State>
+    val state: MutableStateFlow<State> = MutableStateFlow(State(selectedRecipe = flowOf(null)))
 
     private val viewModelScope = CoroutineScope(Dispatchers.Default)
 
@@ -30,17 +31,29 @@ open class BaseViewModel @Inject constructor(
     }
 
     private suspend fun handleAddToFavorite(event: Event.AddToFavorite) {
-        recipeRepository.addToFavorite(event.recipeId)
-        state.emit(state.value.copy(favoriteRecipes = recipeRepository.getFavoriteRecipes()))
+        recipeRepository.addToFavorite(event.recipeId, event.isFavorite)
+        state.value = state.value.copy(favoriteRecipes = recipeRepository.getFavoriteRecipes())
     }
 
-    private suspend fun handleOpenRecipe(event: Event.OpenRecipe) {
-        val recipe = recipeRepository.getRecipeById(event.recipeId)
-        state.emit(state.value.copy(selectedRecipe = recipe))
+    private fun handleOpenRecipe(event: Event.OpenRecipe) {
+        val recipe = recipeRepository.getRecipeById(
+            event.recipeId,
+            event.imageId,
+            event.tittle,
+            event.label,
+            event.description,
+            event.ingredients,
+            event.instructions,
+        )
+        state.value = state.value.copy(selectedRecipe = recipe)
     }
 
-    private suspend fun handleSearchRecipe(event: Event.SearchRecipe) {
-        val recipes = recipeRepository.getRecipes(event.name, event.category)
-        state.emit(state.value.copy(recipes = recipes))
+    private fun handleSearchRecipe(event: Event.SearchRecipe) {
+        val recipes = if (event.category.isNotEmpty()) {
+            recipeRepository.getRecipesByCategory(event.category)
+        } else {
+            recipeRepository.getRecipesByTittle(event.tittle)
+        }
+        state.value = state.value.copy(recipes = recipes)
     }
 }
