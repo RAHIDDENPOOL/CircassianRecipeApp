@@ -10,11 +10,11 @@ data class Recipe(
     @ColumnInfo(name = "id")
     val recipeId: Int = 0,
     val imageId: Int,
-    val name: String,
+    val tittle: String,
     val category: String,
+    val label: String,
+    val description: String,
     val ingredients: String,
     val instructions: String,
     var isFavorite: Boolean
-) {
-    override fun toString() = name
-}
+)

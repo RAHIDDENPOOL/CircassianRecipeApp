@@ -3,9 +3,12 @@ package com.example.circassianrecipeapp.data.repository
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.data.dao.RecipeDao
 import com.example.circassianrecipeapp.data.database.entity.Recipe
+import com.example.circassianrecipeapp.domain.State
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +18,10 @@ import javax.inject.Singleton
 class RecipeRepository @Inject constructor(
     private val recipeDao: RecipeDao
 ) {
+    private val _state = MutableStateFlow(State())
+    val state: StateFlow<State>
+        get() = _state
+
     private fun insertInitialRecipes() {
         CoroutineScope(Dispatchers.Default).launch {
             val recipes = listOf(

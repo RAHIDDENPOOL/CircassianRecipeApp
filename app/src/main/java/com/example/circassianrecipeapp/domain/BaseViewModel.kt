@@ -1,21 +1,21 @@
 package com.example.circassianrecipeapp.domain
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.circassianrecipeapp.data.dao.RecipeDao
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BaseViewModel @Inject constructor(
-    private val recipeDao: RecipeDao,
+open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
-
 ) : ViewModel() {
-    private val _state = MutableStateFlow(State())
+    val state: MutableStateFlow<State> = recipeRepository.state as MutableStateFlow<State>
+
+    private val viewModelScope = CoroutineScope(Dispatchers.Default)
 
     fun handleEvent(event: Event) {
         viewModelScope.launch {
@@ -30,25 +30,17 @@ class BaseViewModel @Inject constructor(
     }
 
     private suspend fun handleAddToFavorite(event: Event.AddToFavorite) {
-        viewModelScope.launch {
-            recipeRepository.addToFavorite(event.recipeId)
-            _state.emit(_state.value.copy(favoriteRecipes = recipeRepository.getFavoriteRecipes()))
-        }
+        recipeRepository.addToFavorite(event.recipeId)
+        state.emit(state.value.copy(favoriteRecipes = recipeRepository.getFavoriteRecipes()))
     }
 
     private suspend fun handleOpenRecipe(event: Event.OpenRecipe) {
-        viewModelScope.launch {
-            val recipe = recipeRepository.getRecipeById(event.recipeId)
-            _state.emit(_state.value.copy(selectedRecipe = recipe))
-            recipeDao.getRecipeById(event.recipeId)
-        }
+        val recipe = recipeRepository.getRecipeById(event.recipeId)
+        state.emit(state.value.copy(selectedRecipe = recipe))
     }
 
     private suspend fun handleSearchRecipe(event: Event.SearchRecipe) {
-        viewModelScope.launch {
-            val recipes = recipeRepository.getRecipes(event.name, event.category)
-            _state.emit(_state.value.copy(recipes = recipes))
-            recipeDao.getRecipes(event.name, event.category)
-        }
+        val recipes = recipeRepository.getRecipes(event.name, event.category)
+        state.emit(state.value.copy(recipes = recipes))
     }
 }
