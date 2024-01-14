@@ -22,26 +22,30 @@ class RecipeRepository @Inject constructor(
     val state: StateFlow<State>
         get() = _state
 
-    private fun insertInitialRecipes() {
+    internal fun insertInitialRecipes() {
         CoroutineScope(Dispatchers.Default).launch {
             val recipes = listOf(
                 Recipe(
                     imageId = R.drawable.dish_one,
-                    name = "Recipe 1",
-                    category = "Category 1",
-                    ingredients = "Ingredient 1",
-                    instructions = "Instructions 1",
+                    tittle = "Черкесские медовые шарики",
+                    category = "Сладости",
+                    label = "Дисерт",
+                    description = "Медовые шарики - блюдо черкесской кухни, которое умеет готовить каждая черкесская хозяйка",
+                    ingredients = "Мёд, тесто",
+                    instructions = "Берем мёд, берем тесто -> бац бац и готово",
                     isFavorite = false
                 ),
                 Recipe(
                     imageId = R.drawable.dish_two,
-                    name = "Recipe 2",
-                    category = "Category 2",
-                    ingredients = "Ingredient 2",
-                    instructions = "Instructions 2",
+                    tittle = "Черкесская курицаи",
+                    category = "На первое",
+                    label = "Мясо",
+                    description = "Курица по черкесски - блюдо черкесской кухни, которое умеет готовить каждая черкесская хозяйка",
+                    ingredients = "Курица, соль, перец",
+                    instructions = "Берем курочку, берем духову -> бац бац и готово",
                     isFavorite = false
                 ),
-                // Добавляем сюда все рецепты
+                // Todo Добавляем сюда все рецепты
             )
             for (recipe in recipes) {
                 recipeDao.insert(recipe)
@@ -49,28 +53,37 @@ class RecipeRepository @Inject constructor(
         }
     }
 
-    fun getRecipes(name: String, category: String): Flow<List<Recipe>> {
-        return recipeDao.getRecipes(name, category)
+    fun getRecipes(
+        tittle: String, category: String, label: String, recipeId: Int, imageId: Int
+    ): Flow<List<Recipe>> {
+        return recipeDao.getRecipes(tittle, category, label, recipeId, imageId)
     }
 
-    fun getRecipeById(recipeId: Int): Flow<Recipe?> {
-        return recipeDao.getRecipeById(recipeId)
+    fun getRecipeById(
+        recipeId: Int, imageId: Int, tittle: String, label: String,
+        description: String, ingredients: String, instructions: String
+    ): Flow<Recipe?> {
+        return recipeDao.getRecipeById(
+            recipeId, imageId, tittle, label, description,
+            ingredients, instructions
+        )
     }
 
-    suspend fun addToFavorite(recipeId: Int) {
-        val recipe = recipeDao.getRecipeById(recipeId).firstOrNull()
-        recipe?.let {
-            it.isFavorite = true
-            recipeDao.insert(it)
-        }
-    }
-
-    fun getRecipesByCategory(category: String): Flow<List<Recipe>> {
-        return recipeDao.getRecipesByCategory(category)
+    suspend fun addToFavorite(recipeId: Int, isFavorite: Boolean) {
+        recipeDao.addToFavorite(recipeId, isFavorite)
     }
 
     fun getFavoriteRecipes(): Flow<List<Recipe>> {
         return recipeDao.getFavoriteRecipes(true)
+    }
+
+    // Todo(Методы для реализации SearchScreenViewModel)
+    fun getRecipesByCategory(category: String): Flow<List<Recipe>> {
+        return recipeDao.getRecipesByCategory(category)
+    }
+
+    fun getRecipesByTittle(tittle: String): Flow<List<Recipe>> {
+        return recipeDao.getRecipesByCategory(tittle)
     }
 
 }
