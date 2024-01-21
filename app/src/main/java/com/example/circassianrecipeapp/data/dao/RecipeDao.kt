@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.circassianrecipeapp.data.database.entity.Recipe
 import kotlinx.coroutines.flow.Flow
 
@@ -18,15 +19,8 @@ interface RecipeDao {
         tittle: String, category: String, label: String, recipeId: Int, imageId: Int
     ): Flow<List<Recipe>>
 
-    @Query(
-        "SELECT * FROM recipes WHERE id = :recipeId AND imageId = :imageId AND" +
-                " tittle = :tittle AND label = :label AND description = :description " +
-                "AND ingredients = :ingredients AND instructions = :instructions"
-    )
-    fun getRecipeById(
-        recipeId: Int, imageId: Int, tittle: String, label: String,
-        description: String, ingredients: String, instructions: String
-    ): Flow<Recipe?>
+    @Query("SELECT * FROM recipes where id = :recipeId ")
+    fun getRecipeById(recipeId: Int): Recipe
 
     //TODO мы должны получить список рецептов по модели метода getRecipes после поиска
     @Query("SELECT * FROM recipes WHERE category = :category ORDER BY category ASC")

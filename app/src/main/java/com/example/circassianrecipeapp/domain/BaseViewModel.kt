@@ -1,10 +1,9 @@
 package com.example.circassianrecipeapp.domain
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -15,8 +14,6 @@ open class BaseViewModel @Inject constructor(
     protected val recipeRepository: RecipeRepository
 ) : ViewModel() {
     val state: MutableStateFlow<State> = MutableStateFlow(State(selectedRecipe = flowOf(null)))
-
-    private val viewModelScope = CoroutineScope(Dispatchers.Main)
 
     fun handleEvent(event: Event) {
         viewModelScope.launch {
@@ -38,13 +35,8 @@ open class BaseViewModel @Inject constructor(
     private fun handleOpenRecipe(event: Event.OpenRecipe) {
         val recipe = recipeRepository.getRecipeById(
             event.recipeId,
-            event.imageId,
-            event.tittle,
-            event.label,
-            event.description,
-            event.ingredients,
-            event.instructions,
-        )
+
+            )
         state.value = state.value.copy(selectedRecipe = recipe)
     }
 

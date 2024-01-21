@@ -13,14 +13,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class RecipeRepository @Inject constructor(
+class RecipeRepository (
     private val recipeDao: RecipeDao
 ) {
-    private val _state = MutableStateFlow(State())
-    val state: StateFlow<State>
-        get() = _state
-
     internal fun insertInitialRecipes() {
         CoroutineScope(Dispatchers.Default).launch {
             val recipes = listOf(
@@ -58,12 +53,10 @@ class RecipeRepository @Inject constructor(
     }
 
     fun getRecipeById(
-        recipeId: Int, imageId: Int, tittle: String, label: String, description:
-        String, ingredients: String, instructions: String
-    ): Flow<Recipe?> {
+        recipeId: Int
+    ): Recipe {
         return recipeDao.getRecipeById(
-            recipeId, imageId, tittle, label,
-            description, ingredients, instructions
+            recipeId
         )
     }
 

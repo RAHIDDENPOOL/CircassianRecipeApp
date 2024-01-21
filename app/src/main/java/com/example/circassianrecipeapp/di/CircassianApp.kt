@@ -7,15 +7,4 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltAndroidApp
-class CircassianApp : Application() {
-    @Inject
-    lateinit var recipeRepository: RecipeRepository
-
-    override fun onCreate() {
-        super.onCreate()
-        //TODO здесь опционально можно запустить viewModelScope.launch{}
-        runBlocking {
-            recipeRepository.insertInitialRecipes()
-        }
-    }
-}
+class CircassianApp : Application()
