@@ -39,8 +39,8 @@ import com.example.circassianrecipeapp.view.theme.TitleTextColorMaterialTheme
 @Composable
 fun RecipeCardsColumn(
     imageId: Array<Int>,
-    names: Array<String>,
-    subhead: Array<String>,
+    tittle: Array<String>,
+    label: Array<String>,
     description: Array<String>,
     modifier: Modifier = Modifier,
     navController: NavController,
@@ -57,8 +57,8 @@ fun RecipeCardsColumn(
                         .fillMaxWidth()
                         .clickable { navController.navigate("DetailScreen/$it") },
                     imageId = imageId[it],
-                    name = names[it],
-                    subhead = subhead[it],
+                    tittle = tittle[it],
+                    label = label[it],
                     description = description[it],
                 )
             }
@@ -70,8 +70,8 @@ fun RecipeCardsColumn(
 fun ColumnItem(
     modifier: Modifier,
     imageId: Int,
-    name: String,
-    subhead: String,
+    tittle: String,
+    label: String,
     description: String,
 ) {
     Card(
@@ -85,7 +85,7 @@ fun ColumnItem(
         ) {
             Image(
                 painter = painterResource(id = imageId),
-                contentDescription = name,
+                contentDescription = tittle,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
@@ -94,14 +94,14 @@ fun ColumnItem(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = name,
+                text = tittle,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = TitleTextColorMaterialTheme,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = subhead,
+                text = label,
                 fontSize = 16.sp,
                 color = DescriptionTextColorMaterialTheme,
             )
