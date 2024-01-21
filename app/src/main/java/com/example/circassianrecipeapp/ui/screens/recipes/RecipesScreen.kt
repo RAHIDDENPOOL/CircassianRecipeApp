@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.ui.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.ui.screens.recipes.components.RecipeCardsColumn
@@ -22,7 +21,8 @@ import com.google.accompanist.pager.rememberPagerState
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun RecipesScreen(navController: NavController, viewModel: RecipesViewModel) {
+fun RecipesScreen(navController: NavController) {
+    val viewModel: RecipesViewModel = hiltViewModel()
     TopNavigationBar()
     Scaffold(
         Modifier
@@ -37,54 +37,28 @@ fun RecipesScreen(navController: NavController, viewModel: RecipesViewModel) {
             },
             content = {
                 Column {
-                    val recipesState by viewModel.state.collectAsState()
-                    // здесь должен быть Recipes который передает список всех рецептов
+                    LaunchedEffect(viewModel) {
+                        viewModel.getAllRecipes().collect { recipes ->
+                            viewModel.recipes.value = recipes
+                        }
+                    }
 
-                    val imageId = arrayOf(
-                        R.drawable.dish_one,
-                        R.drawable.dish_two,
-                        R.drawable.dish_one,
-                        R.drawable.dish_two,
-                        R.drawable.dish_one,
-                        R.drawable.dish_two,
-                    )
-                    val names = arrayOf(
-                        "Черкесский гуляш (Либжэ)",
-                        "Лягур с пастой",
-                        "Гедлибже из курицы",
-                        "Лакум",
-                        "Ритуальный суп из вяленого мяса (Ашрык)",
-                        "Черкесский омлет",
-                    )
-                    val tag = arrayOf(
-                        "Сладости",
-                        "Мясное блюдо",
-                        "Суп",
-                        "Мучные изделия",
-                        "Салат",
-                        "Напитки",
-                    )
-                    val description = arrayOf(
-                        "Это оригинальное блюдо Черкесской кухни готовится из говядины",
-                        "Мясо промываем в холодной воде. Мясо зачищаем от мелких костей, пленки и сухожилий и еще раз промываем в холодной проточной воде",
-                        "Ставим на большой огонь и быстро доведем до кипения, затем уменьшим нагрев и начнем варить",
-                        "Пока варится мясо, на верху кастрюли будет собираться жир и пена, ее обязательно нужно снимать (пена может придать горечь и неприятный запах нашему мясу и бульону)",
-                        "Варка считается законченной, если волокна мяса можно отрывать друг от друга руками",
-                        "Как только мясо готово, мы расщепим мясо мелкими кусками и переложим в тарелку",
-                    )
                     val pagerState = rememberPagerState(initialPage = 10)
                     HorizontalPager(
                         modifier = Modifier.weight(1f),
                         state = pagerState,
-                        count = 10
-                    ) {
-                        RecipeCardsColumn(
-                            imageId = imageId,
-                            names = names,
-                            subhead = tag,
-                            description = description,
-                            navController = navController,
-                        )
+                        count = viewModel.recipes.value.size
+                    ) { page ->
+                        val recipe = viewModel.recipes.value.getOrNull(page)
+                        recipe?.let {
+                            RecipeCardsColumn(
+                                imageId = arrayOf(it.imageId),
+                                tittle = arrayOf(it.tittle),
+                                label = arrayOf(it.label),
+                                description = arrayOf(it.description),
+                                navController = navController,
+                            )
+                        }
                     }
                 }
             },

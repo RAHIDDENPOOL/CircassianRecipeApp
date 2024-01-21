@@ -52,10 +52,9 @@ class RecipeRepository @Inject constructor(
         }
     }
 
-    fun getRecipes(
-        tittle: String, category: String, label: String, recipeId: Int, imageId: Int
+    fun getAllRecipes(
     ): Flow<List<Recipe>> {
-        return recipeDao.getRecipes(tittle, category, label, recipeId, imageId)
+        return recipeDao.getAllRecipes("", "", "", 0, 0)
     }
 
     fun getRecipeById(
@@ -82,7 +81,7 @@ class RecipeRepository @Inject constructor(
     }
 
     fun getRecipesByTittle(tittle: String): Flow<List<Recipe>> {
-        return recipeDao.getRecipesByCategory(tittle)
+        return recipeDao.getRecipesByTittle(tittle)
     }
 
 }

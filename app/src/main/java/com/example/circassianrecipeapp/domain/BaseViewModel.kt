@@ -12,11 +12,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class BaseViewModel @Inject constructor(
-    private val recipeRepository: RecipeRepository
+    protected val recipeRepository: RecipeRepository
 ) : ViewModel() {
     val state: MutableStateFlow<State> = MutableStateFlow(State(selectedRecipe = flowOf(null)))
 
-    private val viewModelScope = CoroutineScope(Dispatchers.Default)
+    private val viewModelScope = CoroutineScope(Dispatchers.Main)
 
     fun handleEvent(event: Event) {
         viewModelScope.launch {
