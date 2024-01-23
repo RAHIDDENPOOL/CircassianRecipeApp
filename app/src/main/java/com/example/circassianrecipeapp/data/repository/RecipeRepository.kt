@@ -1,5 +1,6 @@
 package com.example.circassianrecipeapp.data.repository
 
+import android.util.Log
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.data.dao.RecipeDao
 import com.example.circassianrecipeapp.data.database.entity.Recipe
@@ -9,11 +10,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class RecipeRepository (
+class RecipeRepository(
     private val recipeDao: RecipeDao
 ) {
     internal fun insertInitialRecipes() {
@@ -44,12 +47,16 @@ class RecipeRepository (
             for (recipe in recipes) {
                 recipeDao.insert(recipe)
             }
+            Log.d("RecipeRepository", "insertInitialRecipes() completed successfully")
         }
     }
 
     fun getAllRecipes(
     ): Flow<List<Recipe>> {
         return recipeDao.getAllRecipes("", "", "", 0, 0)
+            .catch { exception ->
+                Log.e("RecipeRepository", "Error getting recipes: $exception")
+            }
     }
 
     fun getRecipeById(

@@ -1,6 +1,7 @@
 package com.example.circassianrecipeapp.ui.screens.recipes
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.database.entity.Recipe
@@ -9,6 +10,9 @@ import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.domain.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,9 +27,17 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    val recipes: MutableState<List<Recipe>> = mutableStateOf(emptyList())
-    fun getAllRecipes(): Flow<List<Recipe>> {
-        return recipeRepository.getAllRecipes()
+    private val _recipes = mutableStateOf<List<Recipe>>(emptyList())
+    val recipes: State<List<Recipe>> = _recipes
+
+    fun getAllRecipes() {
+        viewModelScope.launch {
+            recipeRepository.getAllRecipes().collect { recipes ->
+                _recipes.value = recipes
+                println("Recipes in getAllRecipes(): $recipes")
+                println("Number of recipes: ${recipes.size}")
+            }
+        }
     }
 
     fun addToFavorite(recipeId: Int, isFavorite: Boolean) {
