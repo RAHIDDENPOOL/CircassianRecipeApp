@@ -33,10 +33,7 @@ open class BaseViewModel @Inject constructor(
     }
 
     private fun handleOpenRecipe(event: Event.OpenRecipe) {
-        val recipe = recipeRepository.getRecipeById(
-            event.recipeId,
-
-            )
+        val recipe = recipeRepository.getRecipeById(event.recipeId)
         state.value = state.value.copy(selectedRecipe = recipe)
     }
 

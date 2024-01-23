@@ -20,8 +20,4 @@ data class Recipe(
     val ingredients: String,
     val instructions: String,
     var isFavorite: Boolean
-) : Flow<Nothing?> {
-    override suspend fun collect(collector: FlowCollector<Nothing?>) {
-        TODO("Not yet implemented")
-    }
-}
+)

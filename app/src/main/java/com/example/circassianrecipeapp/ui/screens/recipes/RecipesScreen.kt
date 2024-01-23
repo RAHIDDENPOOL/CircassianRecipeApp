@@ -8,6 +8,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import com.example.circassianrecipeapp.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.ui.screens.recipes.components.Carousel
@@ -37,13 +39,13 @@ fun RecipesScreen(navController: NavController) {
             },
             content = {
                 Column {
+                    val recipes by viewModel.state.value.recipes!!.collectAsState(emptyList())
                     LaunchedEffect(viewModel) {
-                        viewModel.getAllRecipes().collect { recipes ->
-                            viewModel.recipes.value = recipes
-                        }
+                        viewModel.getAllRecipes()
+                        println("Recipes: $recipes")
+                        println("Number of recipes: ${recipes.size}")
                     }
-
-                    val pagerState = rememberPagerState(initialPage = 10)
+                    val pagerState = rememberPagerState(initialPage = 0)
                     HorizontalPager(
                         modifier = Modifier.weight(1f),
                         state = pagerState,
@@ -52,10 +54,7 @@ fun RecipesScreen(navController: NavController) {
                         val recipe = viewModel.recipes.value.getOrNull(page)
                         recipe?.let {
                             RecipeCardsColumn(
-                                imageId = arrayOf(it.imageId),
-                                tittle = arrayOf(it.tittle),
-                                label = arrayOf(it.label),
-                                description = arrayOf(it.description),
+                                recipes = recipes,
                                 navController = navController,
                             )
                         }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -32,16 +33,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.circassianrecipeapp.R
+import com.example.circassianrecipeapp.data.database.entity.Recipe
 import com.example.circassianrecipeapp.view.theme.DescriptionTextColorMaterialTheme
 import com.example.circassianrecipeapp.view.theme.IconColor
 import com.example.circassianrecipeapp.view.theme.TitleTextColorMaterialTheme
 
 @Composable
 fun RecipeCardsColumn(
-    imageId: Array<Int>,
-    tittle: Array<String>,
-    label: Array<String>,
-    description: Array<String>,
+    recipes: List<Recipe>,
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
@@ -50,16 +49,12 @@ fun RecipeCardsColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            val itemCount = imageId.size
-            items(itemCount) {
+            items(recipes) { recipe ->
                 ColumnItem(
                     modifier = modifier
                         .fillMaxWidth()
-                        .clickable { navController.navigate("DetailScreen/$it") },
-                    imageId = imageId[it],
-                    tittle = tittle[it],
-                    label = label[it],
-                    description = description[it],
+                        .clickable { navController.navigate("DetailScreen/$recipe.id") },
+                    recipe = recipe
                 )
             }
         }
@@ -69,10 +64,7 @@ fun RecipeCardsColumn(
 @Composable
 fun ColumnItem(
     modifier: Modifier,
-    imageId: Int,
-    tittle: String,
-    label: String,
-    description: String,
+    recipe: Recipe
 ) {
     Card(
         modifier = modifier,
@@ -84,8 +76,8 @@ fun ColumnItem(
                 .padding(16.dp),
         ) {
             Image(
-                painter = painterResource(id = imageId),
-                contentDescription = tittle,
+                painter = painterResource(id = recipe.imageId),
+                contentDescription = recipe.tittle,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
@@ -94,20 +86,20 @@ fun ColumnItem(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = tittle,
+                text = recipe.tittle,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = TitleTextColorMaterialTheme,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = label,
+                text = recipe.label,
                 fontSize = 16.sp,
                 color = DescriptionTextColorMaterialTheme,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = description,
+                text = recipe.description,
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
                 color = DescriptionTextColorMaterialTheme,
