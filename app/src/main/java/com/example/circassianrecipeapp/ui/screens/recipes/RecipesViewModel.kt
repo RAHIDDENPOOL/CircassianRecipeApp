@@ -1,18 +1,12 @@
 package com.example.circassianrecipeapp.ui.screens.recipes
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.database.entity.Recipe
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import com.example.circassianrecipeapp.domain.BaseViewModel
-import com.example.circassianrecipeapp.domain.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,7 +35,7 @@ class RecipesViewModel @Inject constructor(
     }
 
     fun addToFavorite(recipeId: Int, isFavorite: Boolean) {
-        handleEvent(Event.AddToFavorite(recipeId, isFavorite))
+        handleIntent(Event.AddToFavorite(recipeId, isFavorite))
     }
 
     fun openRecipe(
@@ -53,7 +47,7 @@ class RecipesViewModel @Inject constructor(
         ingredients: String,
         instructions: String
     ) {
-        handleEvent(
+        handleIntent(
             Event.OpenRecipe(
                 recipeId, imageId, title, label, description, ingredients, instructions
             )
