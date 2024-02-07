@@ -3,14 +3,15 @@ package com.example.circassianrecipeapp.data.repository
 import android.util.Log
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.data.dao.RecipeDao
-import com.example.circassianrecipeapp.data.database.entity.Recipe
+import com.example.circassianrecipeapp.data.entity.Recipe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipeRepository(
+class RecipeRepository @Inject constructor(
     private val recipeDao: RecipeDao
 ) {
     internal fun insertInitialRecipes() {

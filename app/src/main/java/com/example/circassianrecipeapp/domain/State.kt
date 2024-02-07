@@ -1,16 +1,16 @@
 package com.example.circassianrecipeapp.domain
 
-import com.example.circassianrecipeapp.data.database.entity.Recipe
+import com.example.circassianrecipeapp.data.entity.Recipe
 import kotlinx.coroutines.flow.Flow
 
-sealed class State {
-    data class Content(
+sealed class State<T> {
+    data class Content<T>(
         val selectedRecipe: Recipe?,
         val recipes: Flow<List<Recipe>>? = null
-    ) : State()
+    ) : State<T>()
 
-    data class Loading(val isLoading: Boolean) : State()
-    data class Error(val errorMessage: String) : State()
+    data class Loading<T>(val isLoading: Boolean) : State<T>()
+    data class Error<T>(val errorMessage: String) : State<T>()
     //TODO(Error logger for BaseViewModel and over spots)
 }
 

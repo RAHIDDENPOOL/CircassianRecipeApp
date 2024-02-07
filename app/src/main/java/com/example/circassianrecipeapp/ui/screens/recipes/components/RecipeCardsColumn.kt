@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.circassianrecipeapp.R
-import com.example.circassianrecipeapp.data.database.entity.Recipe
+import com.example.circassianrecipeapp.data.entity.Recipe
 import com.example.circassianrecipeapp.view.theme.DescriptionTextColorMaterialTheme
 import com.example.circassianrecipeapp.view.theme.IconColor
 import com.example.circassianrecipeapp.view.theme.TitleTextColorMaterialTheme

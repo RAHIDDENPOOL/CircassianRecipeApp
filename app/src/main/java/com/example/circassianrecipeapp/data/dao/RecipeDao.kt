@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.circassianrecipeapp.data.database.entity.Recipe
+import com.example.circassianrecipeapp.data.entity.Recipe
 import kotlinx.coroutines.flow.Flow
 
 @Dao
