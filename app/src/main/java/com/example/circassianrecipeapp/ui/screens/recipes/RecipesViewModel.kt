@@ -9,6 +9,7 @@ import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.domain.Intent
 import com.example.circassianrecipeapp.domain.State
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class RecipesViewModel @Inject constructor(
     recipeRepository: RecipeRepository
 ) : BaseViewModel(recipeRepository) {
+    private var getAllRecipesJob: Job? = null
 
     init {
         viewModelScope.launch {
@@ -27,8 +29,12 @@ class RecipesViewModel @Inject constructor(
     private val _recipes = mutableStateOf<List<Recipe>>(emptyList())
     val recipes: MutableState<List<Recipe>> = _recipes
 
-    fun getAllRecipes() {
-        handleIntent(Intent.LoadRecipes)
+    fun getAllRecipes(): Job {
+        getAllRecipesJob?.cancel() // Cancel the previous job if it exists
+        getAllRecipesJob = viewModelScope.launch {
+            handleIntent(Intent.LoadRecipes)
+        }
+        return getAllRecipesJob as Job
     }
 
     fun addToFavorite(recipeId: Int, isFavorite: Boolean) {

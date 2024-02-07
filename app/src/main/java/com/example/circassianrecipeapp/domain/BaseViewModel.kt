@@ -13,7 +13,7 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-    val state: MutableStateFlow<State<List<Recipe>>> =
+    private val state: MutableStateFlow<State<List<Recipe>>> =
         MutableStateFlow(State.Content(selectedRecipe = null))
 
     fun handleIntent(intent: Intent) {
