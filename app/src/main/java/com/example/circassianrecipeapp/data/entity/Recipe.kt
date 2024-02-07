@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.data.database.entity
+package com.example.circassianrecipeapp.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

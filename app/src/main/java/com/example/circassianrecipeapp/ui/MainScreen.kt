@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.circassianrecipeapp.R
-import com.example.circassianrecipeapp.view.theme.ThemeColorLight
+import com.example.circassianrecipeapp.view.theme.MainContentColorMaterialTheme
 
 @Preview
 @Composable
@@ -40,7 +40,7 @@ fun TopAppBar() {
         modifier = Modifier
             .height(64.dp)
             .fillMaxWidth()
-            .background(color = ThemeColorLight) // Background color if needed
+            .background(color = MainContentColorMaterialTheme) // Background color if needed
     ) {
         Row(
             modifier = Modifier
@@ -82,7 +82,7 @@ fun Carousel() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = ThemeColorLight)
+            .background(color = MainContentColorMaterialTheme)
     )
     {
         Text(text = "Рецепты дня")

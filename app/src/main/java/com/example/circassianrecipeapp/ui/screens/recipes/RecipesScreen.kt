@@ -37,7 +37,7 @@ fun RecipesScreen(navController: NavController) {
             header = {
                 Carousel()
             },
-            content = {
+            content = {/*
                 Column {
                     val recipes by viewModel.state.value.recipes!!.collectAsState(emptyList())
                     LaunchedEffect(viewModel) {
@@ -60,6 +60,7 @@ fun RecipesScreen(navController: NavController) {
                         }
                     }
                 }
+            */
             },
         )
     }
