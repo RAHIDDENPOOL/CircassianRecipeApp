@@ -6,6 +6,8 @@ import com.example.circassianrecipeapp.data.entity.Recipe
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,7 +15,7 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-    val state: MutableStateFlow<State<List<Recipe>>> =
+    private val state: MutableStateFlow<State<List<Recipe>>> =
         MutableStateFlow(State.Content(selectedRecipe = null))
 
     fun handleIntent(intent: Intent) {
@@ -31,9 +33,18 @@ open class BaseViewModel @Inject constructor(
     }
 
     private fun loadRecipes() {
-        recipeRepository.insertInitialRecipes()
-        state.value = State.Loading(isLoading = true)
+        viewModelScope.launch {
+            val recipesFlow = recipeRepository.getAllRecipes()
+            state.value = State.Loading(isLoading = true)
+            try {
+                recipesFlow.toList()
+                state.value = State.Content(recipes = recipesFlow, selectedRecipe = null)
+            } catch (e: Exception) {
+                state.value = State.Error(errorMessage = "Error getting recipes: ${e.message}")
+            }
+        }
     }
+
 
     private suspend fun handleAddToFavorite(intent: Intent.AddToFavorite) {
         recipeRepository.addToFavorite(intent.recipeId, intent.isFavorite)
@@ -50,7 +61,7 @@ open class BaseViewModel @Inject constructor(
             val recipesFlow = if (intent.category.isNotEmpty()) {
                 recipeRepository.getRecipesByCategory(intent.category)
             } else {
-                recipeRepository.getRecipesByTittle(intent.tittle)
+                recipeRepository.getRecipesByTitle(intent.title)
             }
             state.value = State.Content(selectedRecipe = null, recipes = recipesFlow)
         }

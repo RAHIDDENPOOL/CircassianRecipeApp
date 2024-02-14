@@ -11,6 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
+import com.example.circassianrecipeapp.domain.Intent
 import com.example.circassianrecipeapp.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.ui.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.ui.screens.recipes.components.RecipeCardsColumn
@@ -37,30 +38,27 @@ fun RecipesScreen(navController: NavController) {
             header = {
                 Carousel()
             },
-            content = {/*
+            content = {
                 Column {
-                    val recipes by viewModel.state.value.recipes!!.collectAsState(emptyList())
+                    val recipesState by viewModel.recipes.collectAsState()
                     LaunchedEffect(viewModel) {
-                        viewModel.getAllRecipes()
-                        println("Recipes: $recipes")
-                        println("Number of recipes: ${recipes.size}")
+                        viewModel.handleIntent(Intent.LoadRecipes)
                     }
                     val pagerState = rememberPagerState(initialPage = 0)
                     HorizontalPager(
                         modifier = Modifier.weight(1f),
                         state = pagerState,
-                        count = viewModel.recipes.value.size
+                        count = recipesState.size
                     ) { page ->
-                        val recipe = viewModel.recipes.value.getOrNull(page)
+                        val recipe = recipesState.getOrNull(page)
                         recipe?.let {
                             RecipeCardsColumn(
-                                recipes = recipes,
+                                recipes = recipesState,
                                 navController = navController,
                             )
                         }
                     }
                 }
-            */
             },
         )
     }

@@ -76,8 +76,8 @@ fun ColumnItem(
                 .padding(16.dp),
         ) {
             Image(
-                painter = painterResource(id = recipe.imageId),
-                contentDescription = recipe.tittle,
+                painter = painterResource(id = R.drawable.dish_one),
+                contentDescription = recipe.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
@@ -86,7 +86,7 @@ fun ColumnItem(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = recipe.tittle,
+                text = recipe.title,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = TitleTextColorMaterialTheme,
