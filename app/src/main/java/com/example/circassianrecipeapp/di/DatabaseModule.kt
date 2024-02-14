@@ -31,5 +31,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideRepository(dao: RecipeDao): RecipeRepository = RecipeRepository(recipeDao = dao)
+    fun provideRepository(@ApplicationContext context: Context, dao: RecipeDao): RecipeRepository {
+        return RecipeRepository(recipeDao = dao, context = context)
+    }
 }
