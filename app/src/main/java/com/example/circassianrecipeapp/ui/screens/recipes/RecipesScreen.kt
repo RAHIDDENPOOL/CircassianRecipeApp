@@ -11,7 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
-import com.example.circassianrecipeapp.domain.Intent
+import com.example.circassianrecipeapp.domain.UserAction
 import com.example.circassianrecipeapp.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.ui.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.ui.screens.recipes.components.RecipeCardsColumn
@@ -25,7 +25,6 @@ import com.google.accompanist.pager.rememberPagerState
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun RecipesScreen(navController: NavController) {
-    val viewModel: RecipesViewModel = hiltViewModel()
     TopNavigationBar()
     Scaffold(
         Modifier
@@ -38,11 +37,11 @@ fun RecipesScreen(navController: NavController) {
             header = {
                 Carousel()
             },
-            content = {
+            content = {/*
                 Column {
                     val recipesState by viewModel.recipes.collectAsState()
                     LaunchedEffect(viewModel) {
-                        viewModel.handleIntent(Intent.LoadRecipes)
+                        viewModel.handleIntent(UserAction.LoadRecipes)
                     }
                     val pagerState = rememberPagerState(initialPage = 0)
                     HorizontalPager(
@@ -59,6 +58,7 @@ fun RecipesScreen(navController: NavController) {
                         }
                     }
                 }
+           */
             },
         )
     }

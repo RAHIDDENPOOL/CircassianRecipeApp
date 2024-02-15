@@ -5,9 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.entity.Recipe
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,57 +14,58 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-    private val state: MutableStateFlow<State<List<Recipe>>> =
-        MutableStateFlow(State.Content(selectedRecipe = null))
+    private val userState: MutableStateFlow<UserState<List<Recipe>>>
+        get() = MutableStateFlow(UserState.Loading(isLoading = true))
 
-    fun handleIntent(intent: Intent) {
+
+    fun handleIntent(userAction: UserAction) {
         viewModelScope.launch {
-            when (intent) {
-                is Intent.AddToFavorite -> handleAddToFavorite(intent)
+            when (userAction) {
+                is UserAction.AddToFavorite -> handleAddToFavorite(userAction)
 
-                is Intent.LoadRecipes -> loadRecipes()
+                is UserAction.LoadRecipes -> loadRecipes()
 
-                is Intent.OpenRecipe -> handleOpenRecipe(intent.recipeId)
+                is UserAction.OpenRecipe -> handleOpenRecipe(userAction.recipeId)
 
-                is Intent.SearchRecipe -> handleSearchRecipe(intent)
+                is UserAction.SearchRecipe -> handleSearchRecipe(userAction)
             }
         }
     }
 
-    private fun loadRecipes() {
+     private fun loadRecipes() {
         viewModelScope.launch {
-            val recipesFlow = recipeRepository.getAllRecipes()
-            state.value = State.Loading(isLoading = true)
             try {
-                recipesFlow.toList()
-                state.value = State.Content(recipes = recipesFlow, selectedRecipe = null)
+                userState.value = UserState.Loading(isLoading = true)
+                val recipesList = recipeRepository.getAllRecipes()
+                userState.value = UserState.ListContent(recipes = recipesList)
             } catch (e: Exception) {
-                state.value = State.Error(errorMessage = "Error getting recipes: ${e.message}")
+                userState.value =
+                    UserState.Error(errorMessage = "Error getting recipes: ${e.message}")
             }
         }
     }
 
 
-    private suspend fun handleAddToFavorite(intent: Intent.AddToFavorite) {
-        recipeRepository.addToFavorite(intent.recipeId, intent.isFavorite)
-        state.value = State.Content(selectedRecipe = null)
+    private suspend fun handleAddToFavorite(userAction: UserAction.AddToFavorite) {
+        recipeRepository.addToFavorite(userAction.recipeId, userAction.isFavorite)
+        loadRecipes()
     }
+
 
     private fun handleOpenRecipe(recipeId: Int) {
         val recipe = recipeRepository.getRecipeById(recipeId)
-        state.value = State.Content(selectedRecipe = recipe)
+        userState.value = UserState.SelectedContent(selectedRecipe = recipe)
     }
 
-    private fun handleSearchRecipe(intent: Intent.SearchRecipe) {
+    private fun handleSearchRecipe(userAction: UserAction.SearchRecipe) {
         viewModelScope.launch {
-            val recipesFlow = if (intent.category.isNotEmpty()) {
-                recipeRepository.getRecipesByCategory(intent.category)
+            val recipesFlow = if (userAction.category.isNotEmpty()) {
+                recipeRepository.getRecipesByCategory(userAction.category)
             } else {
-                recipeRepository.getRecipesByTitle(intent.title)
+                recipeRepository.getRecipesByTitle(userAction.title)
             }
-            state.value = State.Content(selectedRecipe = null, recipes = recipesFlow)
+            userState.value = UserState.ListContent(recipes = recipesFlow)
         }
     }
 
-    open suspend fun onStateUpdated(newState: State<List<Recipe>>) {}
 }

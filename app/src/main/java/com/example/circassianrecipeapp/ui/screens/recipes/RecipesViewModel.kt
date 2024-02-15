@@ -4,8 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.entity.Recipe
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import com.example.circassianrecipeapp.domain.BaseViewModel
-import com.example.circassianrecipeapp.domain.Intent
-import com.example.circassianrecipeapp.domain.State
+import com.example.circassianrecipeapp.domain.UserAction
+import com.example.circassianrecipeapp.domain.UserState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ class RecipesViewModel @Inject constructor(
 
     private fun initRecipes() {
         viewModelScope.launch {
-            handleIntent(Intent.LoadRecipes)
+            handleIntent(UserAction.LoadRecipes)
         }
     }
 
@@ -31,26 +31,28 @@ class RecipesViewModel @Inject constructor(
     val recipes: StateFlow<List<Recipe>> = _recipes
 
     fun addToFavorite(recipeId: Int, isFavorite: Boolean) {
-        handleIntent(Intent.AddToFavorite(recipeId, isFavorite))
+        handleIntent(UserAction.AddToFavorite(recipeId, isFavorite))
     }
 
     fun openRecipe(recipeId: Int) {
-        handleIntent(Intent.OpenRecipe(recipeId))
+        handleIntent(UserAction.OpenRecipe(recipeId))
     }
 
-    override suspend fun onStateUpdated(newState: State<List<Recipe>>) {
-        when (newState) {
-            is State.Content -> {
-                _recipes.value = newState.recipes?.toList()?.flatten() ?: emptyList()
+    suspend fun onStateUpdated(newUserState: UserState<List<Recipe>>) {
+        when (newUserState) {
+            is UserState.ListContent -> {
+                _recipes.value
             }
 
-            is State.Loading -> {
+            is UserState.Loading -> {
                 // Handle loading state if needed
             }
 
-            is State.Error -> {
+            is UserState.Error -> {
                 // Handle error state if needed
             }
+
+            is UserState.SelectedContent -> TODO()
         }
     }
 }
