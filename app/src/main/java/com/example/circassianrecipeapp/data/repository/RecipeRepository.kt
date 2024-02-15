@@ -22,8 +22,8 @@ class RecipeRepository @Inject constructor(
     suspend fun insertRecipesFromJson() {
         withContext(Dispatchers.IO) {
             try {
-                val recipeFile = context.assets.list("recipes")
-                for (recipeFileName in recipeFile!!) {
+                val recipeFile = context.assets.list("recipes") ?: emptyArray()
+                for (recipeFileName in recipeFile) {
                     try {
                         val json = context.assets.open("recipes/$recipeFileName").bufferedReader()
                             .use { it.readText() }
