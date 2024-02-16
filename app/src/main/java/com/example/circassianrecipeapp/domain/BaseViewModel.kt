@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.entity.Recipe
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,8 +13,8 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-    private val userState: MutableStateFlow<UserState<List<Recipe>>>
-        get() = MutableStateFlow(UserState.Loading(isLoading = true))
+     val userState: MutableStateFlow<UserState<List<Recipe>>> =
+        MutableStateFlow(UserState.Loading(isLoading = true))
 
 
     fun handleIntent(userAction: UserAction) {
@@ -32,12 +31,12 @@ open class BaseViewModel @Inject constructor(
         }
     }
 
-     private fun loadRecipes() {
+    private fun loadRecipes() {
         viewModelScope.launch {
             try {
                 userState.value = UserState.Loading(isLoading = true)
                 val recipesList = recipeRepository.getAllRecipes()
-                userState.value = UserState.ListContent(recipes = recipesList)
+                userState.value = UserState.RecipesList(recipes = recipesList)
             } catch (e: Exception) {
                 userState.value =
                     UserState.Error(errorMessage = "Error getting recipes: ${e.message}")
@@ -64,7 +63,7 @@ open class BaseViewModel @Inject constructor(
             } else {
                 recipeRepository.getRecipesByTitle(userAction.title)
             }
-            userState.value = UserState.ListContent(recipes = recipesFlow)
+            userState.value = UserState.RecipesList(recipes = recipesFlow)
         }
     }
 
