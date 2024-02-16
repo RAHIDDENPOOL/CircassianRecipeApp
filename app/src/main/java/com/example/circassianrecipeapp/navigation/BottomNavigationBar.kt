@@ -14,6 +14,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.circassianrecipeapp.data.dao.RecipeDao
+import com.example.circassianrecipeapp.data.repository.RecipeRepository
+import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.ui.screens.cooking.CookingScreen
 import com.example.circassianrecipeapp.ui.screens.favorites.FavoritesScreen
 import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
@@ -21,7 +24,7 @@ import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController, viewModel: BaseViewModel) {
     val items = listOf(
         BottomNavigationItem(
             route = Route.RecipesScreen,
@@ -70,7 +73,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         content = {
             when (backStackEntry.value?.destination?.route) {
                 Route.RecipesScreen -> {
-                    RecipesScreen(navController = navController)
+                    RecipesScreen(navController = navController, viewModel)
                 }
 
                 Route.Favorites -> {
@@ -82,7 +85,7 @@ fun BottomNavigationBar(navController: NavHostController) {
                 }
 
                 else -> {
-                    RecipesScreen(navController = navController) // TODO -> Обработка неизвестного маршрута = экран по дефолту
+                    RecipesScreen(navController = navController, viewModel) // TODO -> Обработка неизвестного маршрута = экран по дефолту
                 }
             }
         },

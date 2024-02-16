@@ -10,7 +10,7 @@ import com.example.circassianrecipeapp.navigation.BottomNavigationBar
 import com.example.circassianrecipeapp.navigation.Route
 import com.example.circassianrecipeapp.ui.screens.recipes.components.DetailScreen
 import com.example.circassianrecipeapp.view.theme.CircassianRecipeAppTheme
-
+/*
 @Composable
 fun MviApp() {
     CircassianRecipeAppTheme {
@@ -78,4 +78,4 @@ fun MviApp() {
             }
         }
     }
-}
+}*/
