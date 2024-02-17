@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui
+package com.example.circassianrecipeapp.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.circassianrecipeapp.R
-import com.example.circassianrecipeapp.view.theme.MainContentColorMaterialTheme
+import com.example.circassianrecipeapp.presentation.theme.MainContentColorMaterialTheme
 
 @Preview
 @Composable

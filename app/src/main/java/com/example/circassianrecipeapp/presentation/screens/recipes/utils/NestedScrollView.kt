@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.screens.recipes.utils
+package com.example.circassianrecipeapp.presentation.screens.recipes.utils
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.rememberScrollableState

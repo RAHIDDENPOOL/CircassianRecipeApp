@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.screens.recipes.components
+package com.example.circassianrecipeapp.presentation.screens.recipes.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -36,9 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.data.entity.Recipe
-import com.example.circassianrecipeapp.view.theme.DescriptionTextColorMaterialTheme
-import com.example.circassianrecipeapp.view.theme.IconColor
-import com.example.circassianrecipeapp.view.theme.TitleTextColorMaterialTheme
+import com.example.circassianrecipeapp.presentation.theme.DescriptionTextColorMaterialTheme
+import com.example.circassianrecipeapp.presentation.theme.IconColor
+import com.example.circassianrecipeapp.presentation.theme.TitleTextColorMaterialTheme
 import kotlinx.coroutines.flow.Flow
 
 @Composable

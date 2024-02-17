@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import com.example.circassianrecipeapp.domain.BaseViewModel
-import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
+import com.example.circassianrecipeapp.presentation.screens.recipes.RecipesScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
