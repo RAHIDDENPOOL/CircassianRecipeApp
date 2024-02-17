@@ -13,48 +13,58 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-    val state: MutableStateFlow<State<List<Recipe>>> =
-        MutableStateFlow(State.Content(selectedRecipe = null))
+     val userState: MutableStateFlow<UserState<List<Recipe>>> =
+        MutableStateFlow(UserState.Loading(isLoading = true))
 
-    fun handleIntent(intent: Intent) {
+
+    fun handleIntent(userAction: UserAction) {
         viewModelScope.launch {
-            when (intent) {
-                is Intent.AddToFavorite -> handleAddToFavorite(intent)
+            when (userAction) {
+                is UserAction.AddToFavorite -> handleAddToFavorite(userAction)
 
-                is Intent.LoadRecipes -> loadRecipes()
+                is UserAction.LoadRecipes -> loadRecipes()
 
-                is Intent.OpenRecipe -> handleOpenRecipe(intent.recipeId)
+                is UserAction.OpenRecipe -> handleOpenRecipe(userAction.recipeId)
 
-                is Intent.SearchRecipe -> handleSearchRecipe(intent)
+                is UserAction.SearchRecipe -> handleSearchRecipe(userAction)
             }
         }
     }
 
     private fun loadRecipes() {
-        recipeRepository.insertInitialRecipes()
-        state.value = State.Loading(isLoading = true)
-    }
-
-    private suspend fun handleAddToFavorite(intent: Intent.AddToFavorite) {
-        recipeRepository.addToFavorite(intent.recipeId, intent.isFavorite)
-        state.value = State.Content(selectedRecipe = null)
-    }
-
-    private fun handleOpenRecipe(recipeId: Int) {
-        val recipe = recipeRepository.getRecipeById(recipeId)
-        state.value = State.Content(selectedRecipe = recipe)
-    }
-
-    private fun handleSearchRecipe(intent: Intent.SearchRecipe) {
         viewModelScope.launch {
-            val recipesFlow = if (intent.category.isNotEmpty()) {
-                recipeRepository.getRecipesByCategory(intent.category)
-            } else {
-                recipeRepository.getRecipesByTittle(intent.tittle)
+            try {
+                userState.value = UserState.Loading(isLoading = true)
+                val recipesList = recipeRepository.getAllRecipes()
+                userState.value = UserState.RecipesList(recipes = recipesList)
+            } catch (e: Exception) {
+                userState.value =
+                    UserState.Error(errorMessage = "Error getting recipes: ${e.message}")
             }
-            state.value = State.Content(selectedRecipe = null, recipes = recipesFlow)
         }
     }
 
-    open suspend fun onStateUpdated(newState: State<List<Recipe>>) {}
+
+    private suspend fun handleAddToFavorite(userAction: UserAction.AddToFavorite) {
+        recipeRepository.addToFavorite(userAction.recipeId, userAction.isFavorite)
+        loadRecipes()
+    }
+
+
+    private fun handleOpenRecipe(recipeId: Int) {
+        val recipe = recipeRepository.getRecipeById(recipeId)
+        userState.value = UserState.SelectedContent(selectedRecipe = recipe)
+    }
+
+    private fun handleSearchRecipe(userAction: UserAction.SearchRecipe) {
+        viewModelScope.launch {
+            val recipesFlow = if (userAction.category.isNotEmpty()) {
+                recipeRepository.getRecipesByCategory(userAction.category)
+            } else {
+                recipeRepository.getRecipesByTitle(userAction.title)
+            }
+            userState.value = UserState.RecipesList(recipes = recipesFlow)
+        }
+    }
+
 }
