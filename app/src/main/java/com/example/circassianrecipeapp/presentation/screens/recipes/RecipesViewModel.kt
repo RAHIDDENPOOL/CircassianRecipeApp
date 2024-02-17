@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.screens.recipes
+package com.example.circassianrecipeapp.presentation.screens.recipes
 
 import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.entity.Recipe

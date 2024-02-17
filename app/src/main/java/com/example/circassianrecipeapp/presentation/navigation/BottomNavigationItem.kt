@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.navigation
+package com.example.circassianrecipeapp.presentation.navigation
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

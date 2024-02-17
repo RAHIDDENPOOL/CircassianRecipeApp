@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.navigation
+package com.example.circassianrecipeapp.presentation.navigation
 
 object Route {
     const val RecipesScreen = "RecipesScreen"

@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.view.theme
+package com.example.circassianrecipeapp.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

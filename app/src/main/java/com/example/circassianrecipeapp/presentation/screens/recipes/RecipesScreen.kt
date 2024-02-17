@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.screens.recipes
+package com.example.circassianrecipeapp.presentation.screens.recipes
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -14,15 +14,13 @@ import androidx.navigation.NavController
 import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.domain.UserAction
 import com.example.circassianrecipeapp.domain.UserState
-import com.example.circassianrecipeapp.navigation.TopNavigationBar
-import com.example.circassianrecipeapp.ui.screens.recipes.components.Carousel
-import com.example.circassianrecipeapp.ui.screens.recipes.components.RecipeCardsColumn
-import com.example.circassianrecipeapp.ui.screens.recipes.utils.VerticalNestedScrollView
-import com.example.circassianrecipeapp.ui.screens.recipes.utils.rememberNestedScrollViewState
-import com.google.accompanist.pager.ExperimentalPagerApi
+import com.example.circassianrecipeapp.presentation.navigation.TopNavigationBar
+import com.example.circassianrecipeapp.presentation.screens.recipes.components.Carousel
+import com.example.circassianrecipeapp.presentation.screens.recipes.components.RecipeCardsColumn
+import com.example.circassianrecipeapp.presentation.screens.recipes.utils.VerticalNestedScrollView
+import com.example.circassianrecipeapp.presentation.screens.recipes.utils.rememberNestedScrollViewState
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun RecipesScreen(navController: NavController, viewModel: BaseViewModel) {
     val userState by remember { viewModel.userState }.collectAsState()
@@ -61,30 +59,6 @@ fun RecipesScreen(navController: NavController, viewModel: BaseViewModel) {
 
                     }
                 }
-
-
-                /*
-                Column {
-                    val recipesState by viewModel.recipes.collectAsState()
-                    LaunchedEffect(viewModel) {
-                        viewModel.handleIntent(UserAction.LoadRecipes)
-                    }
-                    val pagerState = rememberPagerState(initialPage = 0)
-                    HorizontalPager(
-                        modifier = Modifier.weight(1f),
-                        state = pagerState,
-                        count = recipesState.size
-                    ) { page ->
-                        val recipe = recipesState.getOrNull(page)
-                        recipe?.let {
-                            RecipeCardsColumn(
-                                recipes = recipesState,
-                                navController = navController,
-                            )
-                        }
-                    }
-                }
-           */
             },
         )
     }

@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.ui.screens.recipes.components
+package com.example.circassianrecipeapp.presentation.screens.recipes.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.example.circassianrecipeapp.navigation
+package com.example.circassianrecipeapp.presentation.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
@@ -14,12 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.circassianrecipeapp.data.dao.RecipeDao
-import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import com.example.circassianrecipeapp.domain.BaseViewModel
-import com.example.circassianrecipeapp.ui.screens.cooking.CookingScreen
-import com.example.circassianrecipeapp.ui.screens.favorites.FavoritesScreen
-import com.example.circassianrecipeapp.ui.screens.recipes.RecipesScreen
+import com.example.circassianrecipeapp.presentation.screens.cooking.CookingScreen
+import com.example.circassianrecipeapp.presentation.screens.favorites.FavoritesScreen
+import com.example.circassianrecipeapp.presentation.screens.recipes.RecipesScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
