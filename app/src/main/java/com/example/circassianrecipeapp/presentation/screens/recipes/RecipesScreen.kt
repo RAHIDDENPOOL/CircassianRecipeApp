@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.domain.UserAction
 import com.example.circassianrecipeapp.domain.UserState
+import com.example.circassianrecipeapp.presentation.navigation.BottomNavigationBar
 import com.example.circassianrecipeapp.presentation.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.presentation.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.presentation.screens.recipes.components.RecipeCardsColumn
@@ -24,8 +25,6 @@ import com.example.circassianrecipeapp.presentation.screens.recipes.utils.rememb
 @Composable
 fun RecipesScreen(navController: NavController, viewModel: BaseViewModel) {
     val userState by remember { viewModel.userState }.collectAsState()
-
-    TopNavigationBar()
     Scaffold(
         Modifier
             .fillMaxSize()

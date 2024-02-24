@@ -24,14 +24,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.circassianrecipeapp.R
+import com.example.circassianrecipeapp.domain.BaseViewModel
+import com.example.circassianrecipeapp.presentation.navigation.BottomNavigationBar
+import com.example.circassianrecipeapp.presentation.screens.recipes.RecipesScreen
 import com.example.circassianrecipeapp.presentation.theme.MainContentColorMaterialTheme
 
-@Preview
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController, viewModel: BaseViewModel) {
     Carousel()
     TopAppBar()
+    RecipesScreen(navController, viewModel)
+    BottomNavigationBar(navController, viewModel)
 }
 
 @Composable
