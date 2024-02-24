@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import com.example.circassianrecipeapp.domain.BaseViewModel
+import com.example.circassianrecipeapp.presentation.MainScreen
 import com.example.circassianrecipeapp.presentation.screens.recipes.RecipesScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val viewModel = BaseViewModel(recipeRepository)
-            RecipesScreen(navController = navController, viewModel = viewModel)
+            MainScreen(navController = navController, viewModel = viewModel)
         }
     }
 }

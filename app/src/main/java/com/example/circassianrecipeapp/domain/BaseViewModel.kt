@@ -13,7 +13,7 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) : ViewModel() {
-     val userState: MutableStateFlow<UserState<List<Recipe>>> =
+    val userState: MutableStateFlow<UserState<List<Recipe>>> =
         MutableStateFlow(UserState.Loading(isLoading = true))
 
 
