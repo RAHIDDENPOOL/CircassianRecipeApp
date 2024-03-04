@@ -1,8 +1,10 @@
 package com.example.circassianrecipeapp.presentation.screens.recipes
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+//noinspection UsingMaterialAndMaterial3Libraries
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,7 +16,7 @@ import androidx.navigation.NavController
 import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.domain.UserAction
 import com.example.circassianrecipeapp.domain.UserState
-import com.example.circassianrecipeapp.presentation.navigation.BottomNavigationBar
+import com.example.circassianrecipeapp.presentation.TopAppBar
 import com.example.circassianrecipeapp.presentation.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.presentation.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.presentation.screens.recipes.components.RecipeCardsColumn
@@ -28,18 +30,19 @@ fun RecipesScreen(navController: NavController, viewModel: BaseViewModel) {
     Scaffold(
         Modifier
             .fillMaxSize()
-            .padding(top = 55.dp),
     ) {
         val nestedScrollViewState = rememberNestedScrollViewState()
         VerticalNestedScrollView(
             state = nestedScrollViewState,
             header = {
                 Carousel()
+                TopNavigationBar()
             },
             content = {
                 LaunchedEffect(viewModel) {
                     viewModel.handleIntent(UserAction.LoadRecipes)
                 }
+
                 when (userState) {
                     is UserState.RecipesList -> {
                         val recipesList = (userState as UserState.RecipesList).recipes
@@ -62,3 +65,4 @@ fun RecipesScreen(navController: NavController, viewModel: BaseViewModel) {
         )
     }
 }
+
