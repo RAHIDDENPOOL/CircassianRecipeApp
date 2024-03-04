@@ -29,6 +29,7 @@ import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.presentation.navigation.BottomNavigationBar
 import com.example.circassianrecipeapp.presentation.screens.recipes.RecipesScreen
+import com.example.circassianrecipeapp.presentation.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.presentation.theme.MainContentColorMaterialTheme
 
 @Composable
@@ -82,7 +83,7 @@ fun TopAppBar() {
     }
 }
 
-@Composable
+/*@Composable
 fun Carousel() {
     Box(
         modifier = Modifier
@@ -108,4 +109,4 @@ fun Carousel() {
             )
         }
     }
-}
+}*/

@@ -82,8 +82,7 @@ fun BottomNavigationBar(navController: NavController, viewModel: BaseViewModel) 
 
                 else -> {
                     RecipesScreen(
-                        navController = navController,
-                        viewModel
+                        navController = navController, viewModel
                     ) // TODO -> Обработка неизвестного маршрута = экран по дефолту
                 }
             }
