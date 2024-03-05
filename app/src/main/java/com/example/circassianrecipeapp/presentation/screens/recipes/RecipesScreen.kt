@@ -1,5 +1,6 @@
 package com.example.circassianrecipeapp.presentation.screens.recipes
 
+//noinspection UsingMaterialAndMaterial3Libraries
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,7 +17,7 @@ import androidx.navigation.NavController
 import com.example.circassianrecipeapp.domain.BaseViewModel
 import com.example.circassianrecipeapp.domain.UserAction
 import com.example.circassianrecipeapp.domain.UserState
-import com.example.circassianrecipeapp.presentation.TopAppBar
+import com.example.circassianrecipeapp.presentation.navigation.BottomNavigationBar
 import com.example.circassianrecipeapp.presentation.navigation.TopNavigationBar
 import com.example.circassianrecipeapp.presentation.screens.recipes.components.Carousel
 import com.example.circassianrecipeapp.presentation.screens.recipes.components.RecipeCardsColumn
@@ -36,7 +37,6 @@ fun RecipesScreen(navController: NavController, viewModel: BaseViewModel) {
             state = nestedScrollViewState,
             header = {
                 Carousel()
-                TopNavigationBar()
             },
             content = {
                 LaunchedEffect(viewModel) {

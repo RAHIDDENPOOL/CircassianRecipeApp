@@ -23,12 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.presentation.theme.MainContentColorMaterialTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TopNavigationBar() {
+    val topNavController = rememberNavController()
     MaterialTheme {
         Surface(
             modifier = Modifier
@@ -44,7 +46,7 @@ fun TopNavigationBar() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { /* doSomething() */ }) {
+                IconButton(onClick = { topNavController.navigate(Route.SearchScreen) }) {
                     Icon(
                         modifier = Modifier.size(24.dp),
                         imageVector = Icons.Filled.Search,
@@ -60,7 +62,7 @@ fun TopNavigationBar() {
                         .weight(1f),
                 )
 
-                IconButton(onClick = { /* doSomething() */ }) {
+                IconButton(onClick = { topNavController.navigate(Route.SettingsScreen) }) {
                     Icon(
                         modifier = Modifier.size(24.dp),
                         imageVector = Icons.Filled.Settings,
