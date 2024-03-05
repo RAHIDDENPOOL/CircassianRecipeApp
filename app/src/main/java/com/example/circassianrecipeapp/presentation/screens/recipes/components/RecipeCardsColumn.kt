@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.data.entity.Recipe
+import com.example.circassianrecipeapp.presentation.navigation.Route
 import com.example.circassianrecipeapp.presentation.theme.DescriptionTextColorMaterialTheme
 import com.example.circassianrecipeapp.presentation.theme.IconColor
 import com.example.circassianrecipeapp.presentation.theme.TitleTextColorMaterialTheme
@@ -57,7 +58,7 @@ fun RecipeCardsColumn(
                 ColumnItem(
                     modifier = modifier
                         .fillMaxWidth()
-                        .clickable { navController.navigate("DetailScreen/$recipe.id") },
+                        .clickable { navController.navigate("${Route.DetailScreen}/$recipe.id") },
                     recipe = recipe
                 )
             }
