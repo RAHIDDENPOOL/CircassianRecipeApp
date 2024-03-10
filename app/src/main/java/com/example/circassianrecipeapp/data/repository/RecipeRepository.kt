@@ -25,22 +25,30 @@ class RecipeRepository @Inject constructor(
                 val recipeFile = context.assets.list("recipes") ?: emptyArray()
                 for (recipeFileName in recipeFile) {
                     try {
-                        val json = context.assets.open("recipes/$recipeFileName").bufferedReader()
+                        val json = context.assets
+                            .open("recipes/$recipeFileName")
+                            .bufferedReader()
                             .use { it.readText() }
                         val recipe = Gson().fromJson(json, Recipe::class.java)
+
                         recipeDao.insert(recipe)
-                        Log.d("RecipeRepo", "Inserted recipe: ${recipe.title}")
                     } catch (e: IOException) {
                         Log.e(
                             "RecipeRepo",
                             "Error reading or inserting JSON file: $recipeFileName, $e"
                         )
                     } catch (e: JsonParseException) {
-                        Log.e("RecipeRepo", "Error parsing JSON for file: $recipeFileName, $e")
+                        Log.e(
+                            "RecipeRepo",
+                            "Error parsing JSON for file: $recipeFileName, $e"
+                        )
                     }
                 }
             } catch (e: IOException) {
-                Log.e("RecipeRepo", "Error listing JSON files: $e")
+                Log.e(
+                    "RecipeRepo",
+                    "Error listing JSON files: $e"
+                )
             }
         }
     }
