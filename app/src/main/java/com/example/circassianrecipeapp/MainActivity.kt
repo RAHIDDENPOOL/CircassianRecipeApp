@@ -18,9 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * Для каждого экрана должна быть фугкция preview, UI должен быть доработан о конону Material3 you
- * Compose функции должны содержать как можно меньше параметров в конструкторе?
- * После глобального рефакторинга, код должен быть в едином стиле, отсмотри все TODO заметки
+ * MainActivity должен использоваться в контексте Single Activity
  **/
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -36,8 +34,10 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val viewModel = BaseViewModel(recipeRepository)
 
-            //Todo(NavHost (графы) должны быть опредлены в папке навигации, отдельно для
-            // + Bottom и для TopBar, открытия нового экрана -> это UserAction через MVI)
+            /**
+             * NavHost (графы) должны быть определены в папке навигации, отдельно для Bottom
+             * и для TopBar, открытие нового экрана -> это UserAction через MVI
+             **/
 
             NavHost(navController = navController, startDestination = Route.RecipesScreen) {
                 composable(Route.RecipesScreen) {
