@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.presentation.theme.MainContentColorMaterialTheme
 
+// TODO Переработать Toolbar -> использовать TopAppBar()
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TopNavigationBar() {
