@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var recipeRepository: RecipeRepository
 
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
@@ -35,7 +34,8 @@ class MainActivity : ComponentActivity() {
             MainContent()
         }
     }
-    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     fun MainContent() {
         val navController = rememberNavController()
