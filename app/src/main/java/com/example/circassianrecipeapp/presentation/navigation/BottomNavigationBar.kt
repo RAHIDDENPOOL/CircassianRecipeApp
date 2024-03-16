@@ -1,21 +1,22 @@
 package com.example.circassianrecipeapp.presentation.navigation
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BottomNavigationBar(navHostController: NavHostController) {
     val items = listOf(
@@ -40,11 +41,13 @@ fun BottomNavigationBar(navHostController: NavHostController) {
     )
 
     Column {
-        BottomNavigation {
+        BottomAppBar(
+            modifier = Modifier.navigationBarsPadding()
+        ) {
             val navBackStackEntry by navHostController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
             items.forEach { items ->
-                BottomNavigationItem(
+                NavigationBarItem(
                     onClick = {
                         if (items.route != currentRoute) {
                             when (items.route) {
@@ -62,7 +65,7 @@ fun BottomNavigationBar(navHostController: NavHostController) {
                             }
                         }
                     },
-                    icon = { Icon(items.unSelectedIcon, "") },
+                    icon = { Icon(items.unSelectedIcon, contentDescription = items.title) },
                     label = { Text(text = items.title) },
                     selected = items.route == currentRoute
                 )
@@ -70,3 +73,10 @@ fun BottomNavigationBar(navHostController: NavHostController) {
         }
     }
 }
+
+data class BottomNavigationItemModel(
+    val title: String,
+    val route: String,
+    val selectedIcon: ImageVector,
+    val unSelectedIcon: ImageVector,
+)

@@ -16,7 +16,6 @@ open class BaseViewModel @Inject constructor(
     val userState: MutableStateFlow<UserState<List<Recipe>>> =
         MutableStateFlow(UserState.Loading(isLoading = true))
 
-
     fun handleIntent(userAction: UserAction) {
         viewModelScope.launch {
             when (userAction) {
@@ -44,12 +43,10 @@ open class BaseViewModel @Inject constructor(
         }
     }
 
-
     private suspend fun handleAddToFavorite(userAction: UserAction.AddToFavorite) {
         recipeRepository.addToFavorite(userAction.recipeId, userAction.isFavorite)
         loadRecipes()
     }
-
 
     private fun handleOpenRecipe(recipeId: Int) {
         val recipe = recipeRepository.getRecipeById(recipeId)
@@ -66,5 +63,4 @@ open class BaseViewModel @Inject constructor(
             userState.value = UserState.RecipesList(recipes = recipesFlow)
         }
     }
-
 }
