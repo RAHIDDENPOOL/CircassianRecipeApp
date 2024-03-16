@@ -1,91 +1,82 @@
 package com.example.circassianrecipeapp.presentation.navigation
 
-import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.circassianrecipeapp.domain.BaseViewModel
-import com.example.circassianrecipeapp.presentation.screens.cooking.CookingScreen
-import com.example.circassianrecipeapp.presentation.screens.favorites.FavoritesScreen
-import com.example.circassianrecipeapp.presentation.screens.recipes.RecipesScreen
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun BottomNavigationBar(navController: NavController, viewModel: BaseViewModel) {
+fun BottomNavigationBar(navHostController: NavHostController) {
     val items = listOf(
-        BottomNavigationItem(
-            route = Route.RecipesScreen,
+        BottomNavigationItemModel(
+            route = Route.RECIPESSCREEN,
             title = "Рецепты",
-            selectedIcon = Icons.Default.List,
-            unSelectedIcon = Icons.Default.List,
+            selectedIcon = Icons.Default.Menu,
+            unSelectedIcon = Icons.Default.Menu,
         ),
-        BottomNavigationItem(
-            route = Route.Favorites,
+        BottomNavigationItemModel(
+            route = Route.FAVORITESSCREEN,
             title = "Избранные",
             selectedIcon = Icons.Default.FavoriteBorder,
             unSelectedIcon = Icons.Default.FavoriteBorder,
         ),
-        BottomNavigationItem(
-            route = Route.Cooking,
+        BottomNavigationItemModel(
+            route = Route.COOKINGSSCREEN,
             title = "Готовка",
             selectedIcon = Icons.Default.Info,
             unSelectedIcon = Icons.Default.Info,
         ),
     )
 
-    val backStackEntry = navController.currentBackStackEntryAsState()
+    Column {
+        BottomAppBar(
+            modifier = Modifier.navigationBarsPadding()
+        ) {
+            val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            items.forEach { items ->
+                NavigationBarItem(
+                    onClick = {
+                        if (items.route != currentRoute) {
+                            when (items.route) {
+                                Route.RECIPESSCREEN -> {
+                                    navHostController.navigate(items.route)
+                                }
 
-    Scaffold(
-        bottomBar = {
-            NavigationBar {
-                items.forEachIndexed { _, item ->
-                    NavigationBarItem(
-                        selected = item.route == backStackEntry.value?.destination?.route,
-                        onClick = { navController.navigate(item.route) },
-                        label = {
-                            Text(text = item.title)
-                        },
-                        alwaysShowLabel = true,
-                        icon = {
-                            Icon(
-                                imageVector = item.selectedIcon.takeIf { item.route == backStackEntry.value?.destination?.route }
-                                    ?: item.unSelectedIcon,
-                                contentDescription = item.title,
-                            )
-                        },
-                    )
-                }
+                                Route.FAVORITESSCREEN -> {
+                                    navHostController.navigate(items.route)
+                                }
+
+                                Route.COOKINGSSCREEN -> {
+                                    navHostController.navigate(items.route)
+                                }
+                            }
+                        }
+                    },
+                    icon = { Icon(items.unSelectedIcon, contentDescription = items.title) },
+                    label = { Text(text = items.title) },
+                    selected = items.route == currentRoute
+                )
             }
-        },
-        content = {
-            when (backStackEntry.value?.destination?.route) {
-                Route.RecipesScreen -> {
-                    RecipesScreen(navController = navController, viewModel)
-                }
-
-                Route.Favorites -> {
-                    FavoritesScreen()
-                }
-
-                Route.Cooking -> {
-                    CookingScreen()
-                }
-
-                else -> {
-                    RecipesScreen(
-                        navController = navController, viewModel
-                    ) // TODO -> Обработка неизвестного маршрута = экран по дефолту
-                }
-            }
-        },
-    )
+        }
+    }
 }
+
+data class BottomNavigationItemModel(
+    val title: String,
+    val route: String,
+    val selectedIcon: ImageVector,
+    val unSelectedIcon: ImageVector,
+)

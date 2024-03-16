@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun DetailScreen(
+fun DetailsScreen(
     modifier: Modifier = Modifier,
     photos: Array<Int>,
     names: Array<String>,

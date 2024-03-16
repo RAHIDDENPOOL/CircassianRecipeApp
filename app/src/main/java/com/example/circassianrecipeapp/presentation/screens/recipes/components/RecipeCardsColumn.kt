@@ -58,7 +58,7 @@ fun RecipeCardsColumn(
                 ColumnItem(
                     modifier = modifier
                         .fillMaxWidth()
-                        .clickable { navController.navigate("${Route.DetailScreen}/$recipe.id") },
+                        .clickable { navController.navigate("${Route.DETAILSSCREEN}/$recipe.id") },
                     recipe = recipe
                 )
             }
