@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
@@ -73,10 +72,3 @@ fun BottomNavigationBar(navHostController: NavHostController) {
         }
     }
 }
-
-data class BottomNavigationItemModel(
-    val title: String,
-    val route: String,
-    val selectedIcon: ImageVector,
-    val unSelectedIcon: ImageVector,
-)
