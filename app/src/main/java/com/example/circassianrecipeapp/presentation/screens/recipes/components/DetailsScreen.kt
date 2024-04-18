@@ -21,10 +21,6 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun DetailsScreen(
     modifier: Modifier = Modifier,
-    photos: Array<Int>,
-    names: Array<String>,
-    ingredients: Array<String>,
-    itemIndex: Int?,
 ) {
     Column(
         modifier
@@ -36,6 +32,7 @@ fun DetailsScreen(
             modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center,
         ) {
+            /*
             Image(
                 painter = painterResource(id = photos[itemIndex!!]),
                 contentDescription = names[itemIndex],
@@ -44,5 +41,7 @@ fun DetailsScreen(
         }
         Text(text = names[itemIndex!!], fontSize = 30.sp, fontWeight = FontWeight.Bold)
         Text(text = ingredients[itemIndex], fontSize = 18.sp)
+    }*/
+        }
     }
 }

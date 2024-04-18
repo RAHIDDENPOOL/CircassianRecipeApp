@@ -6,5 +6,5 @@ object Route {
     const val RECIPESSCREEN = "RecipesScreen"
     const val FAVORITESSCREEN = "FavoritesScreen"
     const val COOKINGSSCREEN = "CookingScreen"
-    const val DETAILSSCREEN = "DetailScreen"
+    const val DETAILSSCREEN = "DetailsScreen"
 }
