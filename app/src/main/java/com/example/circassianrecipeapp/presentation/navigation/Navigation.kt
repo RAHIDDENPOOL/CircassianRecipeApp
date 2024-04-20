@@ -31,7 +31,8 @@ fun Navigation(navController: NavHostController, viewModel: BaseViewModel) {
             route = "${Route.DETAILSSCREEN}/{recipeId}",
             arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
         ) { backStackEntry ->
-            DetailsScreen()
+            val recipeId = backStackEntry.arguments?.getInt("recipeId") ?: -1
+            DetailsScreen(recipeId = recipeId, viewModel = viewModel)
         }
 
         composable(Route.SEARCHSCREEN) {

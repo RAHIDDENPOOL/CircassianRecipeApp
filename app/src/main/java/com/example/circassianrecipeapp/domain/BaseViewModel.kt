@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.circassianrecipeapp.data.entity.Recipe
 import com.example.circassianrecipeapp.data.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,9 +51,19 @@ open class BaseViewModel @Inject constructor(
     }
 
     private fun handleOpenRecipe(recipeId: Int) {
-        val recipe = recipeRepository.getRecipeById(recipeId)
-        userState.value = UserState.SelectedContent(selectedRecipe = recipe)
+        viewModelScope.launch {
+            try {
+                val recipe = withContext(Dispatchers.IO) {
+                    recipeRepository.getRecipeById(recipeId)
+                }
+                userState.value = UserState.SelectedContent(selectedRecipe = recipe)
+            } catch (e: Exception) {
+                userState.value =
+                    UserState.Error(errorMessage = "Error opening recipe: ${e.message}")
+            }
+        }
     }
+
 
     private fun handleSearchRecipe(userAction: UserAction.SearchRecipe) {
         viewModelScope.launch {
