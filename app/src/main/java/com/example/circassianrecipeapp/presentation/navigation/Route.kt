@@ -1,8 +1,10 @@
 package com.example.circassianrecipeapp.presentation.navigation
 
 object Route {
-    const val RecipesScreen = "RecipesScreen"
-    const val Favorites = "Favorites"
-    const val Cooking = "Cooking"
-    const val DetailScreen = "DetailScreen"
+    const val SEARCHSCREEN = "SearchScreen"
+    const val SETTINGSSCREEN = "SettingsScreen"
+    const val RECIPESSCREEN = "RecipesScreen"
+    const val FAVORITESSCREEN = "FavoritesScreen"
+    const val COOKINGSSCREEN = "CookingScreen"
+    const val DETAILSSCREEN = "DetailsScreen"
 }

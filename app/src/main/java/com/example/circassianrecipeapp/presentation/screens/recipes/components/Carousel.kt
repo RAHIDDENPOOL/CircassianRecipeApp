@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,15 +29,13 @@ fun Carousel() {
             ItemView(
                 modifier = Modifier
                     .animateContentSize(animationSpec = tween(durationMillis = 200))
-                    .height(height = TOP_BAR_HEIGHT)
-                    .padding(start = 16.dp, end = 8.dp, bottom = 16.dp, top = 8.dp)
+                    .padding(start = 16.dp, end = 8.dp, bottom = 16.dp, top = 63.dp)
                     .fillMaxWidth(),
             )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemView(
     modifier: Modifier = Modifier,
@@ -75,5 +72,3 @@ val items = listOf(
     Items(num = 2),
     Items(num = 3),
 )
-
-val TOP_BAR_HEIGHT = 205.dp
