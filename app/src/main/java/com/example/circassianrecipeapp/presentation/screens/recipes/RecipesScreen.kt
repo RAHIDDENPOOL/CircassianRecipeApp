@@ -1,9 +1,8 @@
 package com.example.circassianrecipeapp.presentation.screens.recipes
 
-//noinspection UsingMaterialAndMaterial3Libraries
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
