@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import com.example.circassianrecipeapp.R
 import com.example.circassianrecipeapp.data.entity.Recipe
 import com.example.circassianrecipeapp.presentation.navigation.Route
+import com.example.circassianrecipeapp.presentation.theme.CircassianRecipeAppTheme
 import com.example.circassianrecipeapp.presentation.theme.DescriptionTextColorMaterialTheme
 import com.example.circassianrecipeapp.presentation.theme.IconColor
 import com.example.circassianrecipeapp.presentation.theme.TitleTextColorMaterialTheme
@@ -49,7 +50,7 @@ fun RecipeCardsColumn(
     navController: NavController,
 ) {
     val recipesList by recipes.collectAsState(emptyList())
-    MaterialTheme {
+    CircassianRecipeAppTheme {
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -71,94 +72,92 @@ fun ColumnItem(
     modifier: Modifier,
     recipe: Recipe
 ) {
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(10.dp),
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+    CircassianRecipeAppTheme {
+        Card(
+            modifier = modifier,
+            shape = RoundedCornerShape(10.dp),
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.dish_one),
-                contentDescription = recipe.title,
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
-                    .clip(shape = RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = recipe.title,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = TitleTextColorMaterialTheme,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = recipe.label,
-                fontSize = 16.sp,
-                color = DescriptionTextColorMaterialTheme,
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = recipe.description,
-                fontSize = 14.sp,
-                lineHeight = 20.sp,
-                color = DescriptionTextColorMaterialTheme,
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Start,
+                    .padding(16.dp),
             ) {
-                Button(
-                    onClick = { /*TODO*/ },
+                Image(
+                    painter = painterResource(id = R.drawable.circassian_flag),
+                    contentDescription = recipe.title,
                     modifier = Modifier
-                        .height(40.dp)
-                        .padding(end = 8.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                    ),
-                ) {
-                    Text(
-                        text = "Сладости",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                Button(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .height(40.dp)
-                        .padding(start = 8.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                    ),
-                ) {
-                    Text(
-                        text = "На второе",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                    )
-                }
-                Spacer(modifier = Modifier.padding(20.dp))
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_favorites),
-                    contentDescription = null,
-                    tint = IconColor,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.CenterVertically),
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .clip(shape = RoundedCornerShape(10.dp)),
+                    contentScale = ContentScale.Crop,
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = recipe.title,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = recipe.label,
+                    fontSize = 16.sp,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = recipe.description,
+                    fontSize = 14.sp,
+                    lineHeight = 20.sp,
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start,
+                ) {
+                    Button(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .height(40.dp)
+                            .padding(end = 8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
+                    ) {
+                        Text(
+                            text = "Сладости",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                    Button(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .height(40.dp)
+                            .padding(start = 8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                        ),
+                    ) {
+                        Text(
+                            text = "На второе",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(20.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_favorites),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(Alignment.CenterVertically),
+                    )
+                }
             }
         }
     }

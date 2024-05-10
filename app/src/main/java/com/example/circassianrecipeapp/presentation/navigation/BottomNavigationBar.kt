@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.circassianrecipeapp.presentation.theme.CircassianRecipeAppTheme
 
 @Composable
 fun BottomNavigationBar(navHostController: NavHostController) {
@@ -38,36 +39,37 @@ fun BottomNavigationBar(navHostController: NavHostController) {
             unSelectedIcon = Icons.Default.Info,
         ),
     )
+    CircassianRecipeAppTheme {
+        Column {
+            BottomAppBar(
+                modifier = Modifier.navigationBarsPadding()
+            ) {
+                val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+                items.forEach { items ->
+                    NavigationBarItem(
+                        onClick = {
+                            if (items.route != currentRoute) {
+                                when (items.route) {
+                                    Route.RECIPESSCREEN -> {
+                                        navHostController.navigate(items.route)
+                                    }
 
-    Column {
-        BottomAppBar(
-            modifier = Modifier.navigationBarsPadding()
-        ) {
-            val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
-            items.forEach { items ->
-                NavigationBarItem(
-                    onClick = {
-                        if (items.route != currentRoute) {
-                            when (items.route) {
-                                Route.RECIPESSCREEN -> {
-                                    navHostController.navigate(items.route)
-                                }
+                                    Route.FAVORITESSCREEN -> {
+                                        navHostController.navigate(items.route)
+                                    }
 
-                                Route.FAVORITESSCREEN -> {
-                                    navHostController.navigate(items.route)
-                                }
-
-                                Route.COOKINGSSCREEN -> {
-                                    navHostController.navigate(items.route)
+                                    Route.COOKINGSSCREEN -> {
+                                        navHostController.navigate(items.route)
+                                    }
                                 }
                             }
-                        }
-                    },
-                    icon = { Icon(items.unSelectedIcon, contentDescription = items.title) },
-                    label = { Text(text = items.title) },
-                    selected = items.route == currentRoute
-                )
+                        },
+                        icon = { Icon(items.unSelectedIcon, contentDescription = items.title) },
+                        label = { Text(text = items.title) },
+                        selected = items.route == currentRoute
+                    )
+                }
             }
         }
     }
