@@ -42,7 +42,6 @@ import com.example.circassianrecipeapp.domain.UserAction
 import com.example.circassianrecipeapp.domain.UserState
 import com.example.circassianrecipeapp.presentation.navigation.Route
 import com.example.circassianrecipeapp.presentation.theme.CircassianRecipeAppTheme
-import com.example.circassianrecipeapp.presentation.theme.PickedColorMaterialTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
