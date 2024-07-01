@@ -21,49 +21,27 @@ class RecipeRepository @Inject constructor(
 ) {
     suspend fun insertRecipesFromJson() {
         withContext(Dispatchers.IO) {
-            try {
-                val recipeFile = context.assets.list("recipes") ?: emptyArray()
-                for (recipeFileName in recipeFile) {
-                    try {
-                        val json = context.assets
-                            .open("recipes/$recipeFileName")
-                            .bufferedReader()
-                            .use { it.readText() }
-                        val recipe = Gson().fromJson(json, Recipe::class.java)
-
-                        recipeDao.insert(recipe)
-                    } catch (e: IOException) {
-                        Log.e(
-                            "RecipeRepo",
-                            "Error reading or inserting JSON file: $recipeFileName, $e"
-                        )
-                    } catch (e: JsonParseException) {
-                        Log.e(
-                            "RecipeRepo",
-                            "Error parsing JSON for file: $recipeFileName, $e"
-                        )
-                    }
+            val recipeFile = context.assets.list("recipes")
+            for (recipeFileName in recipeFile!!) {
+                try {
+                    val json = context.assets
+                        .open("recipes/$recipeFileName")
+                        .bufferedReader()
+                        .use { it.readText() }
+                    val recipe = Gson().fromJson(json, Recipe::class.java)
+                    recipeDao.insert(recipe)
+                } catch (e: IOException) {
+                    Log.e(
+                        "RecipeRepo",
+                        "Error reading or inserting JSON file: $recipeFileName, $e"
+                    )
                 }
-            } catch (e: IOException) {
-                Log.e(
-                    "RecipeRepo",
-                    "Error listing JSON files: $e"
-                )
             }
         }
     }
 
     fun getAllRecipes(): Flow<List<Recipe>> {
         return recipeDao.getAllRecipes()
-            .catch { exception ->
-                Log.e("RecipeRepository", "Error getting recipes: $exception")
-            }
-            .onStart {
-                Log.d("RecipeRepository", "Start getting recipes")
-            }
-            .onCompletion {
-                Log.d("RecipeRepository", "Completed getting recipes")
-            }
     }
 
 
@@ -87,5 +65,4 @@ class RecipeRepository @Inject constructor(
     fun getRecipesByTitle(title: String): Flow<List<Recipe>> {
         return recipeDao.getRecipesByTitle(title)
     }
-
 }
