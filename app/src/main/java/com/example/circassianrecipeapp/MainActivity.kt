@@ -30,11 +30,11 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             recipeRepository.insertRecipesFromJson()
         }
-        setContent {
-            MainContent()
-        }
     }
-
+    override fun onResume() {
+        super.onResume()
+        setContent { MainContent() }
+    }
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     fun MainContent() {
